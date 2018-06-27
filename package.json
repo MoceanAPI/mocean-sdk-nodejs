@@ -1,0 +1,22 @@
+{
+  "name": "mocean-sdk",
+  "version": "1.0.0",
+  "description": "Mocean REST API client for Node.js. ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MoceanAPI/mocean-sdk-nodejs.git"
+  },
+  "keywords": [
+    "mocean"
+  ],
+  "author": "Micro Ocean Technologies Sdn Bhd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MoceanAPI/mocean-sdk-nodejs/issues"
+  },
+  "homepage": "https://github.com/MoceanAPI/mocean-sdk-nodejs#readme"
+}
