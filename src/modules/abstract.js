@@ -62,10 +62,8 @@ class Transmitter
 
     constructor(uri,method,params,callback)
     {
-        // this.domain = 'rest-api.moceansms.com';
+        this.domain = 'rest.moceanapi.com';
         this.port = '443';
-        this.domain = '10.168.1.2';
-        // this.port = '13331';
         this.uri = uri;
         this.params = params;
         this.callback = callback;

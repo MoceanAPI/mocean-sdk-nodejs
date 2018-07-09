@@ -14,9 +14,9 @@ class Verify_validate extends MoceanFactory
         return this;
     }
     
-    setOtpCode(param)
+    setCode(param)
     {
-        this.params['mocean-otp-code'] = param;
+        this.params['mocean-code'] = param;
         return this;
     }
 

@@ -1,7 +1,7 @@
 {
   "name": "mocean-sdk",
-  "version": "1.0.0",
-  "description": "Mocean REST API client for Node.js. ",
+  "version": "1.0.2",
+  "description": "This is a Mocean SDK written in Node.js, to use it you will need a mocean account. Signup for free at https://moceanapi.com",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
