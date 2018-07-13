@@ -66,6 +66,7 @@ class Transmitter
         this.port = '443';
         this.uri = uri;
         this.params = params;
+        this.params['mocean-medium'] = 'NODEJS-SDKS'
         this.callback = callback;
         method = method.toLowerCase();
         this.header = {
