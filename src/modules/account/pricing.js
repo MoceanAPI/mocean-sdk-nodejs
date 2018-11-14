@@ -34,7 +34,7 @@ class Pricing extends MoceanFactory
 
     inquiry(callback = (err,result) => {},params)
     {
-        this.create(params);
+        this.params = Object.assign({},this.params,params);
         this.createFinalParams;
         this.isRequiredFieldSets;
         var response = new Transmitter('/rest/1/account/pricing','get',this.params,callback);
