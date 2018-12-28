@@ -1,26 +1,23 @@
-const {MoceanFactory,Transmitter} = require('../abstract');
+const {MoceanFactory, Transmitter} = require('../abstract');
 
-class Balance extends MoceanFactory
-{
-    constructor(client)
-    {
+class Balance extends MoceanFactory {
+    constructor(client) {
         super(client);
-        this.required_fields = ['mocean-api-key','mocean-api-secret'];
+        this.required_fields = ['mocean-api-key', 'mocean-api-secret'];
     }
-    
-    setRespFormat(param)
-    {
+
+    setRespFormat(param) {
         this.params['mocean-resp-format'] = param;
         return this;
     }
 
-    inquiry(callback = (err,result)=>{}, params)
-    {
-        this.params = Object.assign({},this.params,params);
-        this.createFinalParams;
-        this.isRequiredFieldSets;
-        var response = new Transmitter('/rest/1/account/balance','get',this.params,callback);
-        this.reset;
+    inquiry(callback = (err, result) => {
+    }, params) {
+        this.params = Object.assign({}, this.params, params);
+        this.createFinalParams();
+        this.isRequiredFieldSets();
+        var response = new Transmitter('/rest/1/account/balance', 'get', this.params, callback);
+        this.reset();
     }
 }
 
