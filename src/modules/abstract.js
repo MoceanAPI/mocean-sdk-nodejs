@@ -47,8 +47,6 @@ class MoceanFactory {
             'mocean-api-secret': this.params['mocean-api-secret']
         };
     }
-
-
 }
 
 class Transmitter {
@@ -57,9 +55,9 @@ class Transmitter {
         this.port = '443';
         this.uri = uri;
         this.params = params;
-        if (!this.params['mocean-medium']) {
-            //set as nodejs sdk if
-            this.params['mocean-medium'] = 'NODEJS-SDKS'
+        if (this.params['mocean-medium'] !== 'NODECLI-SDK') {
+            //set as nodejs sdk if not nodecli
+            this.params['mocean-medium'] = 'NODEJS-SDK'
         }
         this.callback = callback;
         method = method.toLowerCase();
