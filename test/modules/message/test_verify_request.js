@@ -61,7 +61,7 @@ describe('Verify Request Test', () => {
         expect(sendCall()).to.be.true;
     });
 
-    it('should return callback on send', async () => {
+    it('should return callback on send', () => {
         const verifyRequest = mocean.verify_request();
         verifyRequest.setTo('test to');
         verifyRequest.setBrand('test brand');
@@ -74,7 +74,7 @@ describe('Verify Request Test', () => {
         });
     });
 
-    it('should reset param after result', async () => {
+    it('should reset param after result', () => {
         const verifyRequest = mocean.verify_request();
         verifyRequest.setTo('test to');
         verifyRequest.setBrand('test brand');

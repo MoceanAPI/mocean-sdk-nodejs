@@ -31,7 +31,7 @@ describe('Pricing Test', () => {
         expect(pricing.params).to.has.property('mocean-resp-format');
     });
 
-    it('should return callback on inquiry', async () => {
+    it('should return callback on inquiry', () => {
         const pricing = mocean.pricing_list();
         return new Promise((resolve, reject) => {
             const fake = sinon.fake(() => {
@@ -42,7 +42,7 @@ describe('Pricing Test', () => {
         });
     });
 
-    it('should reset param after result', async () => {
+    it('should reset param after result', () => {
         const pricing = mocean.pricing_list();
         pricing.setRespFormat('JSON');
         expect(pricing.params).to.has.property('mocean-resp-format');

@@ -85,7 +85,7 @@ describe('SMS Test', () => {
         expect(sendCall()).to.be.true;
     });
 
-    it('should return callback on send', async () => {
+    it('should return callback on send', () => {
         const sms = mocean.sms();
         sms.setText('test text');
         sms.setFrom('test from');
@@ -99,7 +99,7 @@ describe('SMS Test', () => {
         });
     });
 
-    it('should reset param after result', async () => {
+    it('should reset param after result', () => {
         const sms = mocean.sms();
         sms.setText('test text');
         sms.setFrom('test from');

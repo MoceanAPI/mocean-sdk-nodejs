@@ -19,7 +19,7 @@ describe('Balance Test', () => {
         expect(balance.params).to.has.property('mocean-resp-format');
     });
 
-    it('should return callback on inquiry', async () => {
+    it('should return callback on inquiry', () => {
         const balance = mocean.balance();
         return new Promise((resolve, reject) => {
             const fake = sinon.fake(() => {
@@ -30,7 +30,7 @@ describe('Balance Test', () => {
         });
     });
 
-    it('should reset param after result', async () => {
+    it('should reset param after result', () => {
         const balance = mocean.balance();
         balance.setRespFormat('JSON');
         expect(balance.params).to.has.property('mocean-resp-format');

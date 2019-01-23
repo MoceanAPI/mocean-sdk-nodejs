@@ -45,7 +45,7 @@ describe('Verify Validate Test', () => {
         expect(sendCall()).to.be.true;
     });
 
-    it('should return callback on send', async () => {
+    it('should return callback on send', () => {
         const verifyValidate = mocean.verify_validate();
         verifyValidate.setReqid('test req id');
         verifyValidate.setCode('test code');
@@ -58,7 +58,7 @@ describe('Verify Validate Test', () => {
         });
     });
 
-    it('should reset param after result', async () => {
+    it('should reset param after result', () => {
         const verifyValidate = mocean.verify_validate();
         verifyValidate.setReqid('test req id');
         verifyValidate.setCode('test code');
