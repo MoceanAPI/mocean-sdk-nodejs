@@ -4,7 +4,7 @@
   "description": "This is a Mocean SDK written in Node.js, to use it you will need a mocean account. Signup for free at https://moceanapi.com",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/MoceanAPI/mocean-sdk-nodejs/issues"
   },
-  "homepage": "https://github.com/MoceanAPI/mocean-sdk-nodejs#readme"
+  "homepage": "https://github.com/MoceanAPI/mocean-sdk-nodejs#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.3",
+    "sinon-chai": "^3.3.0"
+  }
 }
