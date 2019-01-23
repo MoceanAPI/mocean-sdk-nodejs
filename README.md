@@ -1,5 +1,10 @@
 MoceanAPI Client Library for NodeJS 
 ============================
+[![npm version](https://img.shields.io/npm/v/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)
+[![node version](https://img.shields.io/node/v/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)
+[![build status](https://img.shields.io/travis/com/MoceanAPI/mocean-sdk-nodejs.svg)](https://travis-ci.com/MoceanAPI/mocean-sdk-nodejs)
+[![license](https://img.shields.io/npm/l/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)
+[![total downloads](https://img.shields.io/npm/dt/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)  
 
 This is the NodeJS client library for use Mocean's API. To use this, you'll need a Mocean account. Sign up [for free at 
 moceanapi.com][signup].
@@ -55,7 +60,7 @@ License
 This library is released under the [MIT License][license]
 
 [signup]: https://dashboard.moceanapi.com/register?medium=github&campaign=sdk-javascript
-[doc_sms]: https://docs.moceanapi.com/?javascript#send-sms
-[doc_inbound]: https://docs.moceanapi.com/?javascript#receive-sms
-[doc_verify]: https://docs.moceanapi.com/?javascript#overview-3
+[doc_sms]: https://moceanapi.com/docs/?javascript#send-sms
+[doc_inbound]: https://moceanapi.com/docs/?javascript#receive-sms
+[doc_verify]: https://moceanapi.com/docs/?javascript#verify-api
 [license]: LICENSE.txt
