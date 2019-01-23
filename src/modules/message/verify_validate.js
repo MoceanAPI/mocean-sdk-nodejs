@@ -3,7 +3,7 @@ const {MoceanFactory, Transmitter} = require('../abstract');
 class Verify_validate extends MoceanFactory {
     constructor(client) {
         super(client);
-        this.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-reqid', 'mocean-otp-code'];
+        this.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-reqid', 'mocean-code'];
     }
 
     setReqid(param) {
@@ -31,6 +31,7 @@ class Verify_validate extends MoceanFactory {
         this.createFinalParams();
         this.isRequiredFieldSets();
         var response = new Transmitter('/rest/1/verify/check', 'post', this.params, callback);
+        this.reset();
     }
 
 }

@@ -3,7 +3,7 @@ const {MoceanFactory, Transmitter} = require("../abstract");
 class Message_status extends MoceanFactory {
     constructor(client) {
         super(client);
-        this.required_fields = ['mocean-api-key', 'mocean-api-password', 'mocean-msgid'];
+        this.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-msgid'];
     }
 
     setMsgid(param) {

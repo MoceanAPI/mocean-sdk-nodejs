@@ -96,6 +96,7 @@ class Sms extends MoceanFactory {
         this.createFinalParams();
         this.isRequiredFieldSets();
         var response = new Transmitter('/rest/1/sms', 'post', this.params, callback);
+        this.reset();
     }
 
 }

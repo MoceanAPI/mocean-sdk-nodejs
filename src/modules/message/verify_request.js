@@ -3,11 +3,11 @@ const {MoceanFactory, Transmitter} = require("../abstract");
 class Verify_request extends MoceanFactory {
     constructor(client) {
         super(client);
-        this.required_fields = ["mocean-api-key", "mocean-api-secret", "mocean-to", "brand"];
+        this.required_fields = ["mocean-api-key", "mocean-api-secret", "mocean-to", "mocean-brand"];
     }
 
     setBrand(param) {
-        this.params['mocean-to'] = param;
+        this.params['mocean-brand'] = param;
     }
 
     setFrom(param) {
@@ -48,6 +48,7 @@ class Verify_request extends MoceanFactory {
         this.createFinalParams();
         this.isRequiredFieldSets();
         var response = new Transmitter("/rest/1/verify/req", 'post', this.params, callback);
+        this.reset();
     }
 
 }

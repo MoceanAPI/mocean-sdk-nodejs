@@ -18,7 +18,7 @@ class Mocean {
         if (!(client instanceof Client)) {
             throw Error('Object pass into Mocean must be Client');
         }
-        if (client.params['mocean-api-key'] == null || client.params['mocean-api-secret'] == null) {
+        if (!client.params['mocean-api-key'] || !client.params['mocean-api-secret']) {
             throw Error(`api key and api secret can't be empty`);
         }
         this.obj_auth = client;
