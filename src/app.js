@@ -60,6 +60,11 @@ class Mocean {
         var verify_validate = require('./modules/message/verify_validate');
         return new verify_validate(this.obj_auth);
     }
+
+    number_lookup() {
+        var number_lookup = require('./modules/number_lookup/number_lookup');
+        return new number_lookup(this.obj_auth);
+    }
 }
 
 
