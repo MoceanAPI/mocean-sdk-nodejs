@@ -43,6 +43,12 @@ describe('Verify Request Test', () => {
         expect(verifyRequest.params).to.has.property('mocean-resp-format');
     });
 
+    it('should send as charge per attempt', () => {
+        const verifyRequest = mocean.verify_request();
+        verifyRequest.sendAsCPA();
+        expect(verifyRequest.verifyChargeType).to.equal('CPA');
+    });
+
     it('should throw error when required field not set', () => {
         const verifyRequest = mocean.verify_request();
         const sendCall = () => {
