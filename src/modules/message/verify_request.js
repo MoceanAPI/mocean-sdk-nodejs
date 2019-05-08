@@ -9,42 +9,52 @@ class Verify_request extends MoceanFactory {
 
     setBrand(param) {
         this.params['mocean-brand'] = param;
+        return this;
     }
 
     setFrom(param) {
         this.params['mocean-from'] = param;
+        return this;
     }
 
     setTo(param) {
         this.params['mocean-to'] = param;
+        return this;
     }
 
     setCodeLength(param) {
         this.params['mocean-code-length'] = param;
+        return this;
     }
 
     setTemplate(param) {
         this.params['mocean-template'] = param;
+        return this;
     }
 
     setPinValidity(param) {
         this.params['mocean-pin-validity'] = param;
+        return this;
     }
 
     setNextEventWait(param) {
         this.params['mocean-next-event-wait'] = param;
+        return this;
     }
 
     setRespFormat(param) {
         this.params['mocean-resp-format'] = param;
+        return this;
     }
 
     sendAsCPA() {
         this.verifyChargeType = 'CPA';
+        return this;
     }
 
     sendAsCPC() {
         this.verifyChargeType = 'CPC';
+        return this;
     }
 
     create(params = {}) {
