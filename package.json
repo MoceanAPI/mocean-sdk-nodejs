@@ -4,7 +4,7 @@
   "description": "This is a Mocean SDK written in Node.js, to use it you will need a mocean account. Signup for free at https://moceanapi.com",
   "main": "src/app.js",
   "scripts": {
-    "test": "mocha --recursive --timeout 60000",
+    "test": "mocha --recursive",
     "lint": "./node_modules/.bin/eslint src/**"
   },
   "repository": {

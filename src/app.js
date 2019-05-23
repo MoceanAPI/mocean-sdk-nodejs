@@ -1,6 +1,9 @@
 class Client {
     constructor(api_key = '', api_secret = '') {
-        this.params = { 'mocean-api-key': api_key, 'mocean-api-secret': api_secret };
+        this.params = {
+            'mocean-api-key': api_key,
+            'mocean-api-secret': api_secret
+        };
     }
 
     setApiKey(param) {
@@ -52,9 +55,9 @@ class Mocean {
         return new MessageStatus(this.obj_auth, this.options);
     }
 
-    verify_request() {
+    verify_request(resend = false) {
         const VerifyRequest = require('./modules/message/VerifyRequest');
-        return new VerifyRequest(this.obj_auth, this.options);
+        return new VerifyRequest(this.obj_auth, this.options, resend);
     }
 
     verify_validate() {

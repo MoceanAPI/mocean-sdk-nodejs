@@ -43,14 +43,39 @@ describe('Verify Request Test', () => {
         this.verifyRequest.setNextEventWait('test next event wait');
         expect(this.verifyRequest.params).to.has.property('mocean-next-event-wait');
 
+        expect(this.verifyRequest.params).to.not.has.property('mocean-reqid');
+        this.verifyRequest.setReqId('test req id');
+        expect(this.verifyRequest.params).to.has.property('mocean-reqid');
+
         expect(this.verifyRequest.params).to.not.has.property('mocean-resp-format');
         this.verifyRequest.setRespFormat('JSON');
         expect(this.verifyRequest.params).to.has.property('mocean-resp-format');
     });
 
-    it('should send as charge per attempt', () => {
-        this.verifyRequest.sendAsCPA();
-        expect(this.verifyRequest.verifyChargeType).to.equal('CPA');
+    it('should send as sms channel', () => {
+        sinon.stub(this.transmitterStub, 'send').onCall(0).callsFake((method, uri) => {
+            expect(method).to.equal('post');
+            expect(uri).to.equal('/verify/req/sms');
+        });
+
+        this.verifyRequest.sendAs('sms');
+        expect(this.verifyRequest.channel).to.equal('sms');
+
+        this.verifyRequest.setTo('test to');
+        this.verifyRequest.setBrand('test brand');
+        this.verifyRequest.send();
+    });
+
+    it('should resend verify request when requested', () => {
+        this.verifyRequest = this.mocean.verify_request(true);
+
+        sinon.stub(this.transmitterStub, 'send').onCall(0).callsFake((method, uri) => {
+            expect(method).to.equal('post');
+            expect(uri).to.equal('/verify/resend/sms');
+        });
+
+        this.verifyRequest.setReqId('test req id');
+        this.verifyRequest.resend();
     });
 
     it('should throw error when required field not set', () => {

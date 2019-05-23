@@ -4,7 +4,8 @@ class VerifyRequest extends AbstractMocean {
     constructor(objAuth, options) {
         super(objAuth, options);
         super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-to', 'mocean-brand'];
-        this.verifyChargeType = 'CPC';
+        this.channel = 'auto';
+        this.isResend = false;
     }
 
     setBrand(param) {
@@ -47,14 +48,22 @@ class VerifyRequest extends AbstractMocean {
         return this;
     }
 
-    sendAsCPA() {
-        this.verifyChargeType = 'CPA';
+    setReqId(param) {
+        this.params['mocean-reqid'] = param;
         return this;
     }
 
-    sendAsCPC() {
-        this.verifyChargeType = 'CPC';
+    sendAs(channel = 'auto') {
+        this.channel = channel;
         return this;
+    }
+
+    resend(callback = null, params) {
+        this.sendAs('sms');
+        this.isResend = true;
+        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-reqid'];
+
+        return this.send(callback, params);
     }
 
     send(callback = null, params) {
@@ -63,8 +72,14 @@ class VerifyRequest extends AbstractMocean {
         this.createFinalParams();
         this.isRequiredFieldSets();
 
-        let verifyRequestUrl = '/verify/req';
-        if (this.verifyChargeType === 'CPA') {
+        let verifyRequestUrl = '/verify';
+        if (this.isResend) {
+            verifyRequestUrl += '/resend';
+        } else {
+            verifyRequestUrl += '/req';
+        }
+
+        if (this.channel.toLowerCase() === 'sms') {
             verifyRequestUrl += '/sms';
         }
 
