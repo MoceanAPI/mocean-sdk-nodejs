@@ -1,9 +1,9 @@
-const {MoceanFactory, Transmitter} = require('../abstract');
+const AbstractMocean = require('../AbstractMocean');
 
-class Pricing extends MoceanFactory {
-    constructor(client) {
-        super(client);
-        this.required_fields = ['mocean-api-key', 'mocean-api-secret'];
+class Pricing extends AbstractMocean {
+    constructor(objAuth, options) {
+        super(objAuth, options);
+        super.required_fields = ['mocean-api-key', 'mocean-api-secret'];
     }
 
     setMcc(param) {
@@ -26,13 +26,16 @@ class Pricing extends MoceanFactory {
         return this;
     }
 
-    inquiry(callback = (err, result) => {
-    }, params) {
+    inquiry(callback = null, params) {
         this.params = Object.assign({}, this.params, params);
+
         this.createFinalParams();
         this.isRequiredFieldSets();
-        var response = new Transmitter('/rest/1/account/pricing', 'get', this.params, callback);
+
+        const promise = this.transmitter.get('/account/pricing', this.params, callback);
         this.reset();
+
+        return promise;
     }
 }
 

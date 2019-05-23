@@ -4,67 +4,67 @@ const sinonChai = require("sinon-chai");
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../../../src/app');
+const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Number Lookup Test', () => {
-    const apiKey = 'testapikey';
-    const apiSecret = 'testapisecret';
-    const credentials = new client.Client(apiKey, apiSecret);
-    const mocean = new client.Mocean(credentials);
+    beforeEach(() => {
+        this.transmitterStub = new Transmitter();
+        const apiKey = 'testapikey';
+        const apiSecret = 'testapisecret';
+        const credentials = new client.Client(apiKey, apiSecret);
+        this.mocean = new client.Mocean(credentials, {
+            transmitter: this.transmitterStub
+        });
+        this.numberLookup = this.mocean.number_lookup();
+    });
 
     it('should set params through setter', () => {
-        const numberLookup = mocean.number_lookup();
+        expect(this.numberLookup.params).to.not.has.property('mocean-to');
+        this.numberLookup.setTo('test to');
+        expect(this.numberLookup.params).to.has.property('mocean-to');
 
-        expect(numberLookup.params).to.not.has.property('mocean-to');
-        numberLookup.setTo('test to');
-        expect(numberLookup.params).to.has.property('mocean-to');
+        expect(this.numberLookup.params).to.not.has.property('mocean-nl-url');
+        this.numberLookup.setNlUrl('test nl url');
+        expect(this.numberLookup.params).to.has.property('mocean-nl-url');
 
-        expect(numberLookup.params).to.not.has.property('mocean-nl-url');
-        numberLookup.setNlUrl('test nl url');
-        expect(numberLookup.params).to.has.property('mocean-nl-url');
-
-        expect(numberLookup.params).to.not.has.property('mocean-resp-format');
-        numberLookup.setRespFormat('JSON');
-        expect(numberLookup.params).to.has.property('mocean-resp-format');
+        expect(this.numberLookup.params).to.not.has.property('mocean-resp-format');
+        this.numberLookup.setRespFormat('JSON');
+        expect(this.numberLookup.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {
-        const number_lookup = mocean.number_lookup();
+        sinon.stub(this.transmitterStub, 'send').returns('test');
+
         const inquiryCall = () => {
-            number_lookup.inquiry();
+            this.numberLookup.inquiry();
             return true;
         };
 
-        expect(number_lookup.params).to.not.has.property('mocean-to');
+        expect(this.numberLookup.params).to.not.has.property('mocean-to');
         expect(inquiryCall).to.throw();
-        number_lookup.setTo('test to');
+        this.numberLookup.setTo('test to');
 
         expect(inquiryCall()).to.be.true;
     });
 
     it('should return callback on inquiry', () => {
-        const number_lookup = mocean.number_lookup();
-        number_lookup.setTo('test to');
+        sinon.stub(this.transmitterStub, 'send').callsArg(3);
+
+        this.numberLookup.setTo('test to');
         return new Promise((resolve, reject) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            number_lookup.inquiry(fake);
+            this.numberLookup.inquiry(fake);
         });
     });
 
-    it('should reset param after result', () => {
-        const number_lookup = mocean.number_lookup();
-        number_lookup.setTo('test to');
-        expect(number_lookup.params).to.has.property('mocean-to');
+    it('should return promise on inquiry', async () => {
+        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        return new Promise((resolve, reject) => {
-            const fake = sinon.fake(() => {
-                expect(fake).has.been.calledOnce;
-                expect(number_lookup.params).to.not.has.property('mocean-to');
-                resolve();
-            });
-            number_lookup.inquiry(fake);
-        });
+        this.numberLookup.setTo('test to');
+        const result = await this.numberLookup.inquiry();
+        expect(result).to.equal('promise resolve');
     });
 });

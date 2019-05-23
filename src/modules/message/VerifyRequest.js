@@ -1,9 +1,9 @@
-const {MoceanFactory, Transmitter} = require("../abstract");
+const AbstractMocean = require('../AbstractMocean');
 
-class Verify_request extends MoceanFactory {
-    constructor(client) {
-        super(client);
-        this.required_fields = ["mocean-api-key", "mocean-api-secret", "mocean-to", "mocean-brand"];
+class VerifyRequest extends AbstractMocean {
+    constructor(objAuth, options) {
+        super(objAuth, options);
+        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-to', 'mocean-brand'];
         this.verifyChargeType = 'CPC';
     }
 
@@ -57,25 +57,22 @@ class Verify_request extends MoceanFactory {
         return this;
     }
 
-    create(params = {}) {
-        super.create(params);
-        return this;
-    }
+    send(callback = null, params) {
+        this.params = Object.assign({}, this.params, params);
 
-    send(callback = (err, result) => {
-    }) {
         this.createFinalParams();
         this.isRequiredFieldSets();
 
-        let verifyRequestUrl = '/rest/1/verify/req';
+        let verifyRequestUrl = '/verify/req';
         if (this.verifyChargeType === 'CPA') {
             verifyRequestUrl += '/sms';
         }
 
-        var response = new Transmitter(verifyRequestUrl, 'post', this.params, callback);
+        const promise = this.transmitter.post(verifyRequestUrl, this.params, callback);
         this.reset();
-    }
 
+        return promise;
+    }
 }
 
-module.exports = Verify_request;
+module.exports = VerifyRequest;

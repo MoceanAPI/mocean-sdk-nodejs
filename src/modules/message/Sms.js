@@ -1,9 +1,9 @@
-const {MoceanFactory, Transmitter} = require("../abstract");
+const AbstractMocean = require('../AbstractMocean');
 
-class Sms extends MoceanFactory {
-    constructor(client) {
-        super(client);
-        this.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-text', 'mocean-from', 'mocean-to'];
+class Sms extends AbstractMocean {
+    constructor(objAuth, options) {
+        super(objAuth, options);
+        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-text', 'mocean-from', 'mocean-to'];
         this.flashSms = false;
     }
 
@@ -73,7 +73,7 @@ class Sms extends MoceanFactory {
     }
 
     addTo(param) {
-        if (typeof this.params['mocean-to'] != "undefined" && this.params['mocean-to'] != null) {
+        if (typeof this.params['mocean-to'] !== 'undefined' && this.params['mocean-to'] != null) {
             this.params['mocean-to'] += `,${param}`;
         } else {
             this.params['mocean-to'] = param;
@@ -81,24 +81,22 @@ class Sms extends MoceanFactory {
         return this;
     }
 
-    create(param) {
-        this.reset();
-        super.create(param);
-        return this;
-    }
+    send(callback = null, params) {
+        this.params = Object.assign({}, this.params, params);
 
-    send(callback = (err, result) => {
-    }) {
-        if (this.flashSms == true) {
+        if (this.flashSms === true) {
             this.params['mocean-mclass'] = '1';
             this.params['mocean-alt-dcs'] = '1';
         }
+
         this.createFinalParams();
         this.isRequiredFieldSets();
-        var response = new Transmitter('/rest/1/sms', 'post', this.params, callback);
-        this.reset();
-    }
 
+        const promise = this.transmitter.post('/sms', this.params, callback);
+        this.reset();
+
+        return promise;
+    }
 }
 
 module.exports = Sms;

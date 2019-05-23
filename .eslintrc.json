@@ -1,0 +1,40 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": "airbnb-base/legacy",
+  "parserOptions": {
+    "ecmaVersion": 5,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prefer-const": "warn",
+    "no-var": "error",
+    "no-shadow": "off",
+    "max-len": "warn",
+    "no-multi-assign": "off",
+    "no-unused-vars": "error",
+    "no-console": "warn",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
+    "prefer-promise-reject-errors": "off",
+    "global-require": "off",
+    "camelcase": "off",
+    "consistent-return": "off",
+    "no-param-reassign": "warn",
+    "indent": [
+      "error",
+      4
+    ],
+    "linebreak-style": "off",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
+}

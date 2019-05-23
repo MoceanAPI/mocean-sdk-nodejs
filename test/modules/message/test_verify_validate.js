@@ -4,75 +4,73 @@ const sinonChai = require("sinon-chai");
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../../../src/app');
+const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Verify Validate Test', () => {
-    const apiKey = 'testapikey';
-    const apiSecret = 'testapisecret';
-    const credentials = new client.Client(apiKey, apiSecret);
-    const mocean = new client.Mocean(credentials);
+    beforeEach(() => {
+        this.transmitterStub = new Transmitter();
+        const apiKey = 'testapikey';
+        const apiSecret = 'testapisecret';
+        const credentials = new client.Client(apiKey, apiSecret);
+        this.mocean = new client.Mocean(credentials, {
+            transmitter: this.transmitterStub
+        });
+        this.verifyValidate = this.mocean.verify_validate();
+    });
 
     it('should set params through setter', () => {
-        const verifyValidate = mocean.verify_validate();
+        expect(this.verifyValidate.params).to.not.has.property('mocean-reqid');
+        this.verifyValidate.setReqid('test req id');
+        expect(this.verifyValidate.params).to.has.property('mocean-reqid');
 
-        expect(verifyValidate.params).to.not.has.property('mocean-reqid');
-        verifyValidate.setReqid('test req id');
-        expect(verifyValidate.params).to.has.property('mocean-reqid');
+        expect(this.verifyValidate.params).to.not.has.property('mocean-code');
+        this.verifyValidate.setCode('test code');
+        expect(this.verifyValidate.params).to.has.property('mocean-code');
 
-        expect(verifyValidate.params).to.not.has.property('mocean-code');
-        verifyValidate.setCode('test code');
-        expect(verifyValidate.params).to.has.property('mocean-code');
-
-        expect(verifyValidate.params).to.not.has.property('mocean-resp-format');
-        verifyValidate.setRespFormat('JSON');
-        expect(verifyValidate.params).to.has.property('mocean-resp-format');
+        expect(this.verifyValidate.params).to.not.has.property('mocean-resp-format');
+        this.verifyValidate.setRespFormat('JSON');
+        expect(this.verifyValidate.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {
-        const verifyValidate = mocean.verify_validate();
+        sinon.stub(this.transmitterStub, 'send').returns('test');
+
         const sendCall = () => {
-            verifyValidate.send();
+            this.verifyValidate.send();
             return true;
         };
 
-        expect(verifyValidate.params).to.not.has.property('mocean-reqid');
+        expect(this.verifyValidate.params).to.not.has.property('mocean-reqid');
         expect(sendCall).to.throw();
-        verifyValidate.setReqid('test req id');
+        this.verifyValidate.setReqid('test req id');
 
-        expect(verifyValidate.params).to.not.has.property('mocean-code');
+        expect(this.verifyValidate.params).to.not.has.property('mocean-code');
         expect(sendCall).to.throw();
-        verifyValidate.setCode('test code');
+        this.verifyValidate.setCode('test code');
 
         expect(sendCall()).to.be.true;
     });
 
     it('should return callback on send', () => {
-        const verifyValidate = mocean.verify_validate();
-        verifyValidate.setReqid('test req id');
-        verifyValidate.setCode('test code');
+        sinon.stub(this.transmitterStub, 'send').callsArg(3);
+
+        this.verifyValidate.setReqid('test req id');
+        this.verifyValidate.setCode('test code');
         return new Promise((resolve, reject) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            verifyValidate.send(fake);
+            this.verifyValidate.send(fake);
         });
     });
 
-    it('should reset param after result', () => {
-        const verifyValidate = mocean.verify_validate();
-        verifyValidate.setReqid('test req id');
-        verifyValidate.setCode('test code');
-        expect(verifyValidate.params).to.has.property('mocean-reqid');
-        expect(verifyValidate.params).to.has.property('mocean-code');
+    it('should return promise on send', async () => {
+        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        return new Promise((resolve, reject) => {
-            const fake = sinon.fake(() => {
-                expect(fake).has.been.calledOnce;
-                expect(verifyValidate.params).to.not.has.property('mocean-reqid');
-                expect(verifyValidate.params).to.not.has.property('mocean-code');
-                resolve();
-            });
-            verifyValidate.send(fake);
-        });
+        this.verifyValidate.setReqid('test req id');
+        this.verifyValidate.setCode('test code');
+        const result = await this.verifyValidate.send();
+        expect(result).to.equal('promise resolve');
     });
 });

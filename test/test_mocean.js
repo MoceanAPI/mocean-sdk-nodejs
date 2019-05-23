@@ -92,7 +92,7 @@ describe("Mocean Test", () => {
         const credentials = new client.Client(apiKey, apiSecret);
         const mocean = new client.Mocean(credentials);
 
-        const sms = require('../src/modules/message/sms');
+        const sms = require('../src/modules/message/Sms');
         expect(mocean.sms()).to.be.an.instanceOf(sms);
     });
 
@@ -100,7 +100,7 @@ describe("Mocean Test", () => {
         const credentials = new client.Client(apiKey, apiSecret);
         const mocean = new client.Mocean(credentials);
 
-        const balance = require('../src/modules/account/balance');
+        const balance = require('../src/modules/account/Balance');
         expect(mocean.balance()).to.be.an.instanceOf(balance);
     });
 
@@ -108,7 +108,7 @@ describe("Mocean Test", () => {
         const credentials = new client.Client(apiKey, apiSecret);
         const mocean = new client.Mocean(credentials);
 
-        const pricing = require('../src/modules/account/pricing');
+        const pricing = require('../src/modules/account/Pricing');
         expect(mocean.pricing_list()).to.be.an.instanceOf(pricing);
     });
 
@@ -116,7 +116,7 @@ describe("Mocean Test", () => {
         const credentials = new client.Client(apiKey, apiSecret);
         const mocean = new client.Mocean(credentials);
 
-        const message_status = require('../src/modules/message/message_status');
+        const message_status = require('../src/modules/message/MessageStatus');
         expect(mocean.message_status()).to.be.an.instanceOf(message_status);
     });
 
@@ -124,7 +124,7 @@ describe("Mocean Test", () => {
         const credentials = new client.Client(apiKey, apiSecret);
         const mocean = new client.Mocean(credentials);
 
-        const verify_request = require('../src/modules/message/verify_request');
+        const verify_request = require('../src/modules/message/VerifyRequest');
         expect(mocean.verify_request()).to.be.an.instanceOf(verify_request);
     });
 
@@ -132,7 +132,7 @@ describe("Mocean Test", () => {
         const credentials = new client.Client(apiKey, apiSecret);
         const mocean = new client.Mocean(credentials);
 
-        const verify_validate = require('../src/modules/message/verify_validate');
+        const verify_validate = require('../src/modules/message/VerifyValidate');
         expect(mocean.verify_validate()).to.be.an.instanceOf(verify_validate);
     });
 });

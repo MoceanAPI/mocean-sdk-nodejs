@@ -4,63 +4,63 @@ const sinonChai = require("sinon-chai");
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../../../src/app');
+const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Message Status Test', () => {
-    const apiKey = 'testapikey';
-    const apiSecret = 'testapisecret';
-    const credentials = new client.Client(apiKey, apiSecret);
-    const mocean = new client.Mocean(credentials);
+    beforeEach(() => {
+        this.transmitterStub = new Transmitter();
+        const apiKey = 'testapikey';
+        const apiSecret = 'testapisecret';
+        const credentials = new client.Client(apiKey, apiSecret);
+        this.mocean = new client.Mocean(credentials, {
+            transmitter: this.transmitterStub
+        });
+        this.messageStatus = this.mocean.message_status();
+    });
 
     it('should set params through setter', () => {
-        const messageStatus = mocean.message_status();
+        expect(this.messageStatus.params).to.not.has.property('mocean-msgid');
+        this.messageStatus.setMsgid('test msg id');
+        expect(this.messageStatus.params).to.has.property('mocean-msgid');
 
-        expect(messageStatus.params).to.not.has.property('mocean-msgid');
-        messageStatus.setMsgid('test msg id');
-        expect(messageStatus.params).to.has.property('mocean-msgid');
-
-        expect(messageStatus.params).to.not.has.property('mocean-resp-format');
-        messageStatus.setRespFormat('JSON');
-        expect(messageStatus.params).to.has.property('mocean-resp-format');
+        expect(this.messageStatus.params).to.not.has.property('mocean-resp-format');
+        this.messageStatus.setRespFormat('JSON');
+        expect(this.messageStatus.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {
-        const messageStatus = mocean.message_status();
+        sinon.stub(this.transmitterStub, 'send').returns('test');
+
         const inquiryCall = () => {
-            messageStatus.inquiry();
+            this.messageStatus.inquiry();
             return true;
         };
 
-        expect(messageStatus.params).to.not.has.property('mocean-msgid');
+        expect(this.messageStatus.params).to.not.has.property('mocean-msgid');
         expect(inquiryCall).to.throw();
 
-        messageStatus.setMsgid('test msgid');
+        this.messageStatus.setMsgid('test msgid');
         expect(inquiryCall()).to.be.true;
     });
 
     it('should return callback on inquiry', () => {
-        const messageStatus = mocean.message_status();
-        messageStatus.setMsgid('test msg id');
+        sinon.stub(this.transmitterStub, 'send').callsArg(3);
+
+        this.messageStatus.setMsgid('test msg id');
         return new Promise((resolve, reject) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            messageStatus.inquiry(fake);
+            this.messageStatus.inquiry(fake);
         });
     });
 
-    it('should reset param after result', () => {
-        const messageStatus = mocean.message_status();
-        messageStatus.setMsgid('test msg id');
-        expect(messageStatus.params).to.has.property('mocean-msgid');
+    it('should return promise on inquiry', async () => {
+        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        return new Promise((resolve, reject) => {
-            const fake = sinon.fake(() => {
-                expect(fake).has.been.calledOnce;
-                expect(messageStatus.params).to.not.has.property('mocean-msgid');
-                resolve();
-            });
-            messageStatus.inquiry(fake);
-        });
+        this.messageStatus.setMsgid('test msg id');
+        const result = await this.messageStatus.inquiry();
+        expect(result).to.equal('promise resolve');
     });
 });
