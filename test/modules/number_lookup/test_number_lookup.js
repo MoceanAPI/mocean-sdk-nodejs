@@ -60,11 +60,13 @@ describe('Number Lookup Test', () => {
         });
     });
 
-    it('should return promise on inquiry', async () => {
+    it('should return promise on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.numberLookup.setTo('test to');
-        const result = await this.numberLookup.inquiry();
-        expect(result).to.equal('promise resolve');
+        this.numberLookup.inquiry()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });

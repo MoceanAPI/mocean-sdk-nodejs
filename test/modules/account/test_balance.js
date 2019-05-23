@@ -37,10 +37,12 @@ describe('Balance Test', () => {
         });
     });
 
-    it('should return promise on inquiry', async () => {
+    it('should return promise on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        const result = await this.balance.inquiry();
-        expect(result).to.equal('promise resolve');
+        this.balance.inquiry()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });

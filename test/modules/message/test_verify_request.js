@@ -86,12 +86,14 @@ describe('Verify Request Test', () => {
         });
     });
 
-    it('should return promise on send', async () => {
+    it('should return promise on send', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.verifyRequest.setTo('test to');
         this.verifyRequest.setBrand('test brand');
-        const result = await this.verifyRequest.send();
-        expect(result).to.equal('promise resolve');
+        this.verifyRequest.send()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });

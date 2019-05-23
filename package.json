@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "mocha --recursive --timeout 60000",
-    "lint": "./node_modules/.bin/eslint --fix src/**"
+    "lint": "./node_modules/.bin/eslint src/**"
   },
   "repository": {
     "type": "git",

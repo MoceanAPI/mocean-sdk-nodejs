@@ -65,12 +65,14 @@ describe('Verify Validate Test', () => {
         });
     });
 
-    it('should return promise on send', async () => {
+    it('should return promise on send', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.verifyValidate.setReqid('test req id');
         this.verifyValidate.setCode('test code');
-        const result = await this.verifyValidate.send();
-        expect(result).to.equal('promise resolve');
+        this.verifyValidate.send()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });

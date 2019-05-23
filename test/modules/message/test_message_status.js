@@ -56,11 +56,13 @@ describe('Message Status Test', () => {
         });
     });
 
-    it('should return promise on inquiry', async () => {
+    it('should return promise on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.messageStatus.setMsgid('test msg id');
-        const result = await this.messageStatus.inquiry();
-        expect(result).to.equal('promise resolve');
+        this.messageStatus.inquiry()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });

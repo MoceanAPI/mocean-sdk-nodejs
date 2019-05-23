@@ -48,10 +48,12 @@ describe('Pricing Test', () => {
         });
     });
 
-    it('should return promise on inquiry', async () => {
+    it('should return promise on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        const result = await this.pricing.inquiry();
-        expect(result).to.equal('promise resolve');
+        this.pricing.inquiry()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });

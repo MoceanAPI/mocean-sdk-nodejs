@@ -106,13 +106,15 @@ describe('SMS Test', () => {
         });
     });
 
-    it('should return promise on send', async () => {
+    it('should return promise on send', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.sms.setText('test text');
         this.sms.setFrom('test from');
         this.sms.setTo('test to');
-        const result = await this.sms.send();
-        expect(result).to.equal('promise resolve');
+        this.sms.send()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
     });
 });
