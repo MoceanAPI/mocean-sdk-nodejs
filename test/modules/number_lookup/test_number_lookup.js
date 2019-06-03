@@ -56,7 +56,7 @@ describe('Number Lookup Test', () => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.numberLookup.inquiry(fake);
+            this.numberLookup.inquiry(null, fake);
         });
     });
 

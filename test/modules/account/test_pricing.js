@@ -44,7 +44,7 @@ describe('Pricing Test', () => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.pricing.inquiry(fake);
+            this.pricing.inquiry(null, fake);
         });
     });
 

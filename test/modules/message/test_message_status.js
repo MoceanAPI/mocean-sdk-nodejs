@@ -52,7 +52,7 @@ describe('Message Status Test', () => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.messageStatus.inquiry(fake);
+            this.messageStatus.inquiry(null, fake);
         });
     });
 

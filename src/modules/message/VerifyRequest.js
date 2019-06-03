@@ -58,15 +58,15 @@ class VerifyRequest extends AbstractMocean {
         return this;
     }
 
-    resend(callback = null, params) {
+    resend(params = null, callback = null) {
         this.sendAs('sms');
         this.isResend = true;
         super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-reqid'];
 
-        return this.send(callback, params);
+        return this.send(params, callback);
     }
 
-    send(callback = null, params) {
+    send(params = null, callback = null) {
         this.params = Object.assign({}, this.params, params);
 
         this.createFinalParams();

@@ -33,7 +33,7 @@ describe('Balance Test', () => {
                 expect(fake).has.been.called;
                 resolve();
             });
-            this.balance.inquiry(fake);
+            this.balance.inquiry(null, fake);
         });
     });
 

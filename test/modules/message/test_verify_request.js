@@ -107,7 +107,7 @@ describe('Verify Request Test', () => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.verifyRequest.send(fake);
+            this.verifyRequest.send(null, fake);
         });
     });
 

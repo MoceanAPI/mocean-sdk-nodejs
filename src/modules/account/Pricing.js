@@ -26,7 +26,7 @@ class Pricing extends AbstractMocean {
         return this;
     }
 
-    inquiry(callback = null, params) {
+    inquiry(params = null, callback = null) {
         this.params = Object.assign({}, this.params, params);
 
         this.createFinalParams();

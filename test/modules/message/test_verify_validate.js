@@ -61,7 +61,7 @@ describe('Verify Validate Test', () => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.verifyValidate.send(fake);
+            this.verifyValidate.send(null, fake);
         });
     });
 

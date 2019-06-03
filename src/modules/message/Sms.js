@@ -81,7 +81,7 @@ class Sms extends AbstractMocean {
         return this;
     }
 
-    send(callback = null, params) {
+    send(params = null, callback = null) {
         this.params = Object.assign({}, this.params, params);
 
         if (this.flashSms === true) {

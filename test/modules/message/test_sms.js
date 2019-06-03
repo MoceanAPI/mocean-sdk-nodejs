@@ -102,7 +102,7 @@ describe('SMS Test', () => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.sms.send(fake);
+            this.sms.send(null, fake);
         });
     });
 
