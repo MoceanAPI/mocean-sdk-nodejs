@@ -1,6 +1,6 @@
-const chai = require("chai");
-const sinon = require("sinon");
-const sinonChai = require("sinon-chai");
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../../../src/app');
@@ -56,7 +56,7 @@ describe('Verify Validate Test', () => {
 
         this.verifyValidate.setReqid('test req id');
         this.verifyValidate.setCode('test code');
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();

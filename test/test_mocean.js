@@ -1,11 +1,10 @@
-const chai = require("chai");
-const sinon = require("sinon");
-const sinonChai = require("sinon-chai");
+const chai = require('chai');
+const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../src/app');
 
-describe("Credentials test", () => {
+describe('Credentials test', () => {
     const apiKey = 'testapikey';
     const apiSecret = 'testapisecret';
 
@@ -38,10 +37,10 @@ describe("Credentials test", () => {
 
         expect(credentials.params['mocean-api-key']).to.equal(apiKey);
         expect(credentials.params['mocean-api-secret']).to.equal(apiSecret);
-    })
+    });
 });
 
-describe("Mocean Test", () => {
+describe('Mocean Test', () => {
     const apiKey = 'testapikey';
     const apiSecret = 'testapisecret';
 
@@ -54,22 +53,22 @@ describe("Mocean Test", () => {
 
     it('should throw error when credentials not set', () => {
         const nullApiKey = () => {
-            new client.Mocean(new client.Client(null, apiSecret));
+            client.Mocean(new client.Client(null, apiSecret));
         };
         const nullApiSecret = () => {
-            new client.Mocean(new client.Client(apiKey, null));
+            client.Mocean(new client.Client(apiKey, null));
         };
         const bothNull = () => {
-            new client.Mocean(new client.Client(null, null));
+            client.Mocean(new client.Client(null, null));
         };
         const emptyApiKey = () => {
-            new client.Mocean(new client.Client('', apiSecret));
+            client.Mocean(new client.Client('', apiSecret));
         };
         const emptyApiSecret = () => {
-            new client.Mocean(new client.Client(apiKey, ''));
+            client.Mocean(new client.Client(apiKey, ''));
         };
         const bothEmpty = () => {
-            new client.Mocean(new client.Client());
+            client.Mocean(new client.Client());
         };
 
         expect(nullApiKey).to.throw();

@@ -1,6 +1,6 @@
-const chai = require("chai");
-const sinon = require("sinon");
-const sinonChai = require("sinon-chai");
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../../../src/app');
@@ -51,7 +51,7 @@ describe('Number Lookup Test', () => {
         sinon.stub(this.transmitterStub, 'send').callsArg(3);
 
         this.numberLookup.setTo('test to');
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();

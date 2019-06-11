@@ -1,6 +1,6 @@
-const chai = require("chai");
-const sinon = require("sinon");
-const sinonChai = require("sinon-chai");
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 const client = require('../../../src/app');
@@ -97,7 +97,7 @@ describe('SMS Test', () => {
         this.sms.setText('test text');
         this.sms.setFrom('test from');
         this.sms.setTo('test to');
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();

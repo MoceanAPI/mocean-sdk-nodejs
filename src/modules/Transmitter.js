@@ -21,22 +21,23 @@ class Transmitter {
     }
 
     send(method, uri, params, callback = null) {
-        if (params['mocean-medium'] !== 'NODECLI-SDK') {
+        const clonedParams = Object.assign({}, params);
+        if (clonedParams['mocean-medium'] !== 'NODECLI-SDK') {
             // set as nodejs sdk if not nodecli
-            params['mocean-medium'] = 'NODEJS-SDK';
+            clonedParams['mocean-medium'] = 'NODEJS-SDK';
         }
 
         // use json if default not set;
-        if (!params['mocean-resp-format']) {
-            params['mocean-resp-format'] = 'json';
+        if (!clonedParams['mocean-resp-format']) {
+            clonedParams['mocean-resp-format'] = 'json';
         }
 
         const httpOptions = {
             baseUrl: this.options.baseUrl + '/rest/' + this.options.version,
             uri: uri,
             method: method,
-            qs: method === 'get' ? params : {},
-            form: method === 'post' ? params : {}
+            qs: method === 'get' ? clonedParams : {},
+            form: method === 'post' ? clonedParams : {}
         };
 
         if (callback === null) {
