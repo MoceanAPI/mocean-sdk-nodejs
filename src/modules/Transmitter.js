@@ -8,7 +8,7 @@ class Transmitter {
     static defaultOptions() {
         return {
             baseUrl: 'https://rest.moceanapi.com',
-            version: '1'
+            version: '2'
         };
     }
 

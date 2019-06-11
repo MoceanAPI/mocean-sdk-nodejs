@@ -27,7 +27,7 @@ class NumberLookup extends AbstractMocean {
         this.createFinalParams();
         this.isRequiredFieldSets();
 
-        const promise = this.transmitter.get('/nl', this.params, callback);
+        const promise = this.transmitter.post('/nl', this.params, callback);
         this.reset();
 
         return promise;
