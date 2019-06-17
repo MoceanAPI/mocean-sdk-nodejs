@@ -6,7 +6,7 @@ chai.use(sinonChai);
 const client = require('../../../src/app');
 const Transmitter = require('../../../src/modules/Transmitter');
 
-describe('Message Status Test', () => {
+describe('Number Lookup Test', () => {
     beforeEach(() => {
         this.transmitterStub = new Transmitter();
         const apiKey = 'testapikey';
@@ -15,52 +15,56 @@ describe('Message Status Test', () => {
         this.mocean = new client.Mocean(credentials, {
             transmitter: this.transmitterStub
         });
-        this.messageStatus = this.mocean.message_status();
+        this.numberLookup = this.mocean.number_lookup();
     });
 
     it('should set params through setter', () => {
-        expect(this.messageStatus.params).to.not.has.property('mocean-msgid');
-        this.messageStatus.setMsgid('test msg id');
-        expect(this.messageStatus.params).to.has.property('mocean-msgid');
+        expect(this.numberLookup.params).to.not.has.property('mocean-to');
+        this.numberLookup.setTo('test to');
+        expect(this.numberLookup.params).to.has.property('mocean-to');
 
-        expect(this.messageStatus.params).to.not.has.property('mocean-resp-format');
-        this.messageStatus.setRespFormat('JSON');
-        expect(this.messageStatus.params).to.has.property('mocean-resp-format');
+        expect(this.numberLookup.params).to.not.has.property('mocean-nl-url');
+        this.numberLookup.setNlUrl('test nl url');
+        expect(this.numberLookup.params).to.has.property('mocean-nl-url');
+
+        expect(this.numberLookup.params).to.not.has.property('mocean-resp-format');
+        this.numberLookup.setRespFormat('JSON');
+        expect(this.numberLookup.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {
         sinon.stub(this.transmitterStub, 'send').returns('test');
 
         const inquiryCall = () => {
-            this.messageStatus.inquiry();
+            this.numberLookup.inquiry();
             return true;
         };
 
-        expect(this.messageStatus.params).to.not.has.property('mocean-msgid');
+        expect(this.numberLookup.params).to.not.has.property('mocean-to');
         expect(inquiryCall).to.throw();
+        this.numberLookup.setTo('test to');
 
-        this.messageStatus.setMsgid('test msgid');
         expect(inquiryCall()).to.be.true;
     });
 
     it('should return callback on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').callsArg(3);
 
-        this.messageStatus.setMsgid('test msg id');
+        this.numberLookup.setTo('test to');
         return new Promise((resolve) => {
             const fake = sinon.fake(() => {
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
-            this.messageStatus.inquiry(null, fake);
+            this.numberLookup.inquiry(null, fake);
         });
     });
 
     it('should return promise on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        this.messageStatus.setMsgid('test msg id');
-        this.messageStatus.inquiry()
+        this.numberLookup.setTo('test to');
+        this.numberLookup.inquiry()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });
