@@ -2,7 +2,7 @@ MoceanAPI Client Library for NodeJS
 ============================
 [![npm version](https://img.shields.io/npm/v/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)
 [![build status](https://img.shields.io/travis/com/MoceanAPI/mocean-sdk-nodejs.svg)](https://travis-ci.com/MoceanAPI/mocean-sdk-nodejs)
-[![codacy](https://img.shields.io/codacy/grade/d2325f05741d442d9045121b39c5d180.svg)](https://app.codacy.com/project/MoceanAPI/mocean-sdk-nodejs/dashboard)
+[![codacy](https://img.shields.io/codacy/grade/988872ff78ee4429a1780aa6359886a0.svg)](https://app.codacy.com/project/MoceanAPI/mocean-sdk-nodejs/dashboard)
 [![license](https://img.shields.io/npm/l/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)
 [![total downloads](https://img.shields.io/npm/dt/mocean-sdk.svg)](https://www.npmjs.com/package/mocean-sdk)  
 
