@@ -45,19 +45,19 @@ class Transmitter {
             return new Promise((resolve, reject) => {
                 request(httpOptions, (err, res, body) => {
                     if (err) {
-                        reject(err);
+                        return reject(err);
                     }
 
                     try {
                         const parsedBody = JSON.parse(body);
                         if (parsedBody.status && parsedBody.status !== 0 && parsedBody.status !== '0') {
-                            reject(parsedBody.err_msg);
+                            return reject(parsedBody.err_msg);
                         }
 
-                        resolve(parsedBody);
+                        return resolve(parsedBody);
                     } catch (e) {
                         // simple resolve xml response
-                        resolve(body);
+                        return resolve(body);
                     }
                 });
             });
@@ -66,19 +66,19 @@ class Transmitter {
         // expect to be callback base
         request(httpOptions, (err, res, body) => {
             if (err) {
-                callback(err, null);
+                return callback(err, null);
             }
 
             try {
                 const parsedBody = JSON.parse(body);
                 if (parsedBody.status && parsedBody.status !== 0) {
-                    callback(parsedBody.err_msg, null);
+                    return callback(parsedBody.err_msg, null);
                 }
 
-                callback(null, parsedBody);
+                return callback(null, parsedBody);
             } catch (e) {
                 // simple callback xml response
-                callback(null, body);
+                return callback(null, body);
             }
         });
     }
