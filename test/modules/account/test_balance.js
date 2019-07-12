@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
-const client = require('../../../src/app');
+const { Client, Mocean } = require('../../../src/index');
 const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Balance Test', () => {
@@ -11,8 +11,8 @@ describe('Balance Test', () => {
         this.transmitterStub = new Transmitter();
         const apiKey = 'testapikey';
         const apiSecret = 'testapisecret';
-        const credentials = new client.Client(apiKey, apiSecret);
-        this.mocean = new client.Mocean(credentials, {
+        const credentials = new Client(apiKey, apiSecret);
+        this.mocean = new Mocean(credentials, {
             transmitter: this.transmitterStub
         });
         this.balance = this.mocean.balance();

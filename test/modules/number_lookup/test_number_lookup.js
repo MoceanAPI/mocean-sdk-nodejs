@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
-const client = require('../../../src/app');
+const { Client, Mocean } = require('../../../src/index');
 const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Number Lookup Test', () => {
@@ -11,8 +11,8 @@ describe('Number Lookup Test', () => {
         this.transmitterStub = new Transmitter();
         const apiKey = 'testapikey';
         const apiSecret = 'testapisecret';
-        const credentials = new client.Client(apiKey, apiSecret);
-        this.mocean = new client.Mocean(credentials, {
+        const credentials = new Client(apiKey, apiSecret);
+        this.mocean = new Mocean(credentials, {
             transmitter: this.transmitterStub
         });
         this.numberLookup = this.mocean.number_lookup();
