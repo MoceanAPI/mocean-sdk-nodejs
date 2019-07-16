@@ -8,7 +8,7 @@ class Collect extends AbstractMccc {
         this.requestData.min = this.requestData.min ? this.requestData.min : 1;
         this.requestData.max = this.requestData.max ? this.requestData.max : 10;
         this.requestData.terminators = this.requestData.terminators ? this.requestData.terminators : '#';
-        this.requestData.timeout = this.requestData.timeout ? this.requestData.timeout : 5;
+        this.requestData.timeout = this.requestData.timeout ? this.requestData.timeout : 5000;
     }
 
     setEventUrl(param) {
