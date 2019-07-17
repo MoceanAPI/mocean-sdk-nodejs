@@ -15,8 +15,12 @@ class AbstractMocean {
         }
     }
 
+    setRespFormat(param) {
+        this.params['mocean-resp-format'] = param;
+        return this;
+    }
+
     create(params) {
-        this.reset();
         this.params = Object.assign({}, this.params, params);
     }
 
@@ -39,11 +43,10 @@ class AbstractMocean {
         return true;
     }
 
-    reset() {
-        this.params = {
-            'mocean-api-key': this.params['mocean-api-key'],
-            'mocean-api-secret': this.params['mocean-api-secret']
-        };
+    createAndValidate(params) {
+        this.create(params);
+        this.createFinalParams();
+        this.isRequiredFieldSets();
     }
 
     requiredField() {

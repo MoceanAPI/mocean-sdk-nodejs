@@ -15,21 +15,10 @@ class NumberLookup extends AbstractMocean {
         return this;
     }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
-
     inquiry(params = null, callback = null) {
-        this.params = Object.assign({}, this.params, params);
+        this.createAndValidate(params);
 
-        this.createFinalParams();
-        this.isRequiredFieldSets();
-
-        const promise = this.transmitter.post('/nl', this.params, callback);
-        this.reset();
-
-        return promise;
+        return this.transmitter.post('/nl', this.params, callback);
     }
 }
 

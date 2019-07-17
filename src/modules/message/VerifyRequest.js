@@ -50,11 +50,6 @@ class VerifyRequest extends AbstractMocean {
         return this;
     }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
-
     setReqId(param) {
         this.params['mocean-reqid'] = param;
         return this;
@@ -73,10 +68,7 @@ class VerifyRequest extends AbstractMocean {
     }
 
     send(params = null, callback = null) {
-        this.params = Object.assign({}, this.params, params);
-
-        this.createFinalParams();
-        this.isRequiredFieldSets();
+        this.createAndValidate(params);
 
         let verifyRequestUrl = '/verify';
         if (this.isResend) {
@@ -89,10 +81,7 @@ class VerifyRequest extends AbstractMocean {
             verifyRequestUrl += '/sms';
         }
 
-        const promise = this.transmitter.post(verifyRequestUrl, this.params, callback);
-        this.reset();
-
-        return promise;
+        return this.transmitter.post(verifyRequestUrl, this.params, callback);
     }
 }
 
