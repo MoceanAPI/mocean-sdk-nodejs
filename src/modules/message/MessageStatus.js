@@ -1,9 +1,8 @@
 const AbstractMocean = require('../AbstractMocean');
 
 class MessageStatus extends AbstractMocean {
-    constructor(objAuth, options) {
-        super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-msgid'];
+    requiredField() {
+        return [...super.requiredField(), ...['mocean-msgid']];
     }
 
     setMsgid(param) {

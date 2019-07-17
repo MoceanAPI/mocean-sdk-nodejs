@@ -1,11 +1,6 @@
 const AbstractMocean = require('../AbstractMocean');
 
 class Pricing extends AbstractMocean {
-    constructor(objAuth, options) {
-        super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret'];
-    }
-
     setMcc(param) {
         this.params['mocean-mcc'] = param;
         return this;

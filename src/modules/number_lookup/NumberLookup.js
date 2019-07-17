@@ -1,9 +1,8 @@
 const AbstractMocean = require('../AbstractMocean');
 
 class NumberLookup extends AbstractMocean {
-    constructor(objAuth, options) {
-        super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-to'];
+    requiredField() {
+        return [...super.requiredField(), ...['mocean-to']];
     }
 
     setTo(param) {

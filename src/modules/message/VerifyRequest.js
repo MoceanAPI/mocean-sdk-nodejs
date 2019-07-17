@@ -3,9 +3,16 @@ const AbstractMocean = require('../AbstractMocean');
 class VerifyRequest extends AbstractMocean {
     constructor(objAuth, options) {
         super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-to', 'mocean-brand'];
         this.channel = 'auto';
         this.isResend = false;
+    }
+
+    requiredField() {
+        if (this.isResend) {
+            return [...super.requiredField(), ...['mocean-reqid']];
+        }
+
+        return [...super.requiredField(), ...['mocean-to', 'mocean-brand']];
     }
 
     setBrand(param) {
@@ -61,7 +68,6 @@ class VerifyRequest extends AbstractMocean {
     resend(params = null, callback = null) {
         this.sendAs('sms');
         this.isResend = true;
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-reqid'];
 
         return this.send(params, callback);
     }

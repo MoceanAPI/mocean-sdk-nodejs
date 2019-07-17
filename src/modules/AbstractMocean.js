@@ -13,8 +13,6 @@ class AbstractMocean {
         } else {
             this.transmitter = new Transmitter(options);
         }
-
-        this.required_fields = [];
     }
 
     create(params) {
@@ -39,9 +37,9 @@ class AbstractMocean {
     }
 
     isRequiredFieldSets() {
-        for (const i in this.required_fields) {
-            if (typeof this.params[this.required_fields[i]] === 'undefined') {
-                throw Error(`${this.required_fields[i]} is mandatory field.`);
+        for (const i in this.requiredField()) {
+            if (typeof this.params[this.requiredField()[i]] === 'undefined') {
+                throw Error(`${this.requiredField()[i]} is mandatory field.`);
             }
         }
         return true;
@@ -52,6 +50,10 @@ class AbstractMocean {
             'mocean-api-key': this.params['mocean-api-key'],
             'mocean-api-secret': this.params['mocean-api-secret']
         };
+    }
+
+    requiredField() {
+        return ['mocean-api-key', 'mocean-api-secret'];
     }
 }
 

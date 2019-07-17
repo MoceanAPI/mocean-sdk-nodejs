@@ -3,8 +3,11 @@ const AbstractMocean = require('../AbstractMocean');
 class Sms extends AbstractMocean {
     constructor(objAuth, options) {
         super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-text', 'mocean-from', 'mocean-to'];
         this.flashSms = false;
+    }
+
+    requiredField() {
+        return [...super.requiredField(), ...['mocean-text', 'mocean-from', 'mocean-to']];
     }
 
     setFrom(param) {

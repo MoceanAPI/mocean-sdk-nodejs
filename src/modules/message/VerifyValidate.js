@@ -1,9 +1,8 @@
 const AbstractMocean = require('../AbstractMocean');
 
 class VerifyValidate extends AbstractMocean {
-    constructor(objAuth, options) {
-        super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-reqid', 'mocean-code'];
+    requiredField() {
+        return [...super.requiredField(), ...['mocean-reqid', 'mocean-code']];
     }
 
     setReqid(param) {
