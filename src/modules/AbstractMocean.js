@@ -22,26 +22,20 @@ class AbstractMocean {
 
     createFinalParams() {
         const newParams = {};
-        let key = '';
-        for (const i in this.params) {
-            if (this.params[i].length > 0 && this.params[i] != null) {
-                key = i;
-                // append prefix mocean- if not exist in key
-                if (!key.match(/^mocean-/i)) {
-                    key = 'mocean-' + i;
-                }
-                newParams[key] = this.params[i];
+        Object.entries(this.params).forEach(([key, val]) => {
+            if (val !== null && val.length > 0) {
+                newParams[key.match(/^mocean-/i) ? key : 'mocean-' + key] = val;
             }
-        }
+        });
         this.params = newParams;
     }
 
     isRequiredFieldSets() {
-        for (const i in this.requiredField()) {
-            if (typeof this.params[this.requiredField()[i]] === 'undefined') {
-                throw Error(`${this.requiredField()[i]} is mandatory field.`);
+        this.requiredField().forEach((requiredField) => {
+            if (typeof this.params[requiredField] === 'undefined') {
+                throw Error(`${requiredField} is mandatory field.`);
             }
-        }
+        });
         return true;
     }
 
