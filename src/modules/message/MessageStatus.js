@@ -1,9 +1,8 @@
 const AbstractMocean = require('../AbstractMocean');
 
 class MessageStatus extends AbstractMocean {
-    constructor(objAuth, options) {
-        super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-msgid'];
+    requiredField() {
+        return [...super.requiredField(), ...['mocean-msgid']];
     }
 
     setMsgid(param) {
@@ -11,21 +10,10 @@ class MessageStatus extends AbstractMocean {
         return this;
     }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
-
     inquiry(params = null, callback = null) {
-        this.params = Object.assign({}, this.params, params);
+        this.createAndValidate(params);
 
-        this.createFinalParams();
-        this.isRequiredFieldSets();
-
-        const promise = this.transmitter.get('/report/message', this.params, callback);
-        this.reset();
-
-        return promise;
+        return this.transmitter.get('/report/message', this.params, callback);
     }
 }
 

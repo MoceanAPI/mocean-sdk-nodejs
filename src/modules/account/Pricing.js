@@ -1,11 +1,6 @@
 const AbstractMocean = require('../AbstractMocean');
 
 class Pricing extends AbstractMocean {
-    constructor(objAuth, options) {
-        super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret'];
-    }
-
     setMcc(param) {
         this.params['mocean-mcc'] = param;
         return this;
@@ -21,21 +16,10 @@ class Pricing extends AbstractMocean {
         return this;
     }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
-
     inquiry(params = null, callback = null) {
-        this.params = Object.assign({}, this.params, params);
+        this.createAndValidate(params);
 
-        this.createFinalParams();
-        this.isRequiredFieldSets();
-
-        const promise = this.transmitter.get('/account/pricing', this.params, callback);
-        this.reset();
-
-        return promise;
+        return this.transmitter.get('/account/pricing', this.params, callback);
     }
 }
 

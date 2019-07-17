@@ -25,6 +25,7 @@
     "camelcase": "off",
     "consistent-return": "off",
     "no-param-reassign": "warn",
+    "class-methods-use-this": "off",
     "indent": [
       "error",
       4

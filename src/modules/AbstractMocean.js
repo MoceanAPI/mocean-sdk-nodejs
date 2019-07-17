@@ -13,45 +13,44 @@ class AbstractMocean {
         } else {
             this.transmitter = new Transmitter(options);
         }
+    }
 
-        this.required_fields = [];
+    setRespFormat(param) {
+        this.params['mocean-resp-format'] = param;
+        return this;
     }
 
     create(params) {
-        this.reset();
         this.params = Object.assign({}, this.params, params);
     }
 
     createFinalParams() {
         const newParams = {};
-        let key = '';
-        for (const i in this.params) {
-            if (this.params[i].length > 0 && this.params[i] != null) {
-                key = i;
-                // append prefix mocean- if not exist in key
-                if (!key.match(/^mocean-/i)) {
-                    key = 'mocean-' + i;
-                }
-                newParams[key] = this.params[i];
+        Object.keys(this.params).forEach((key) => {
+            if (this.params[key] !== null && this.params[key].length > 0) {
+                newParams[key.match(/^mocean-/i) ? key : 'mocean-' + key] = this.params[key];
             }
-        }
+        });
         this.params = newParams;
     }
 
     isRequiredFieldSets() {
-        for (const i in this.required_fields) {
-            if (typeof this.params[this.required_fields[i]] === 'undefined') {
-                throw Error(`${this.required_fields[i]} is mandatory field.`);
+        this.requiredField().forEach((requiredField) => {
+            if (typeof this.params[requiredField] === 'undefined') {
+                throw Error(`${requiredField} is mandatory field.`);
             }
-        }
+        });
         return true;
     }
 
-    reset() {
-        this.params = {
-            'mocean-api-key': this.params['mocean-api-key'],
-            'mocean-api-secret': this.params['mocean-api-secret']
-        };
+    createAndValidate(params) {
+        this.create(params);
+        this.createFinalParams();
+        this.isRequiredFieldSets();
+    }
+
+    requiredField() {
+        return ['mocean-api-key', 'mocean-api-secret'];
     }
 }
 

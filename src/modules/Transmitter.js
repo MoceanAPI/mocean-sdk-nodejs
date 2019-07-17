@@ -32,54 +32,48 @@ class Transmitter {
             clonedParams['mocean-resp-format'] = 'json';
         }
 
-        const httpOptions = {
+        const response = this.makeRequest({
             baseUrl: this.options.baseUrl + '/rest/' + this.options.version,
-            uri: uri,
-            method: method,
+            uri,
+            method,
             qs: method === 'get' ? clonedParams : {},
             form: method === 'post' ? clonedParams : {}
-        };
+        });
 
         if (callback === null) {
             // return promise wrapper if no callback passed in
-            return new Promise((resolve, reject) => {
-                request(httpOptions, (err, res, body) => {
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    try {
-                        const parsedBody = JSON.parse(body);
-                        if (parsedBody.status && parsedBody.status !== 0 && parsedBody.status !== '0') {
-                            return reject(parsedBody.err_msg);
-                        }
-
-                        return resolve(parsedBody);
-                    } catch (e) {
-                        // simple resolve xml response
-                        return resolve(body);
-                    }
-                });
-            });
+            return response;
         }
 
         // expect to be callback base
-        request(httpOptions, (err, res, body) => {
-            if (err) {
+        return response
+            .then((res) => {
+                return callback(null, res);
+            })
+            .catch((err) => {
                 return callback(err, null);
-            }
+            });
+    }
 
-            try {
-                const parsedBody = JSON.parse(body);
-                if (parsedBody.status && parsedBody.status !== 0) {
-                    return callback(parsedBody.err_msg, null);
+    makeRequest(httpOptions) {
+        return new Promise((resolve, reject) => {
+            request(httpOptions, (err, res, body) => {
+                if (err) {
+                    return reject(err);
                 }
 
-                return callback(null, parsedBody);
-            } catch (e) {
-                // simple callback xml response
-                return callback(null, body);
-            }
+                try {
+                    const parsedBody = JSON.parse(body);
+                    if (parsedBody.status && parsedBody.status !== 0 && parsedBody.status !== '0') {
+                        return reject(parsedBody.err_msg);
+                    }
+
+                    return resolve(parsedBody);
+                } catch (e) {
+                    // simple resolve xml response
+                    return resolve(body);
+                }
+            });
         });
     }
 }

@@ -3,8 +3,11 @@ const AbstractMocean = require('../AbstractMocean');
 class Sms extends AbstractMocean {
     constructor(objAuth, options) {
         super(objAuth, options);
-        super.required_fields = ['mocean-api-key', 'mocean-api-secret', 'mocean-text', 'mocean-from', 'mocean-to'];
         this.flashSms = false;
+    }
+
+    requiredField() {
+        return [...super.requiredField(), ...['mocean-text', 'mocean-from', 'mocean-to']];
     }
 
     setFrom(param) {
@@ -67,11 +70,6 @@ class Sms extends AbstractMocean {
         return this;
     }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
-
     addTo(param) {
         if (typeof this.params['mocean-to'] !== 'undefined' && this.params['mocean-to'] != null) {
             this.params['mocean-to'] += `,${param}`;
@@ -82,20 +80,14 @@ class Sms extends AbstractMocean {
     }
 
     send(params = null, callback = null) {
-        this.params = Object.assign({}, this.params, params);
+        this.createAndValidate(params);
 
         if (this.flashSms === true) {
             this.params['mocean-mclass'] = '1';
             this.params['mocean-alt-dcs'] = '1';
         }
 
-        this.createFinalParams();
-        this.isRequiredFieldSets();
-
-        const promise = this.transmitter.post('/sms', this.params, callback);
-        this.reset();
-
-        return promise;
+        return this.transmitter.post('/sms', this.params, callback);
     }
 }
 
