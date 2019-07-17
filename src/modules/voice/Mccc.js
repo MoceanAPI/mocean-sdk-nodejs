@@ -52,34 +52,6 @@ class Mccc {
 
         return ins;
     }
-
-    static get Builder() {
-        class Builder {
-            constructor() {
-                this.mccc = [];
-            }
-
-            add(mccc) {
-                const AbstractMccc = require('./Mccc/AbstractMccc');
-                if (mccc instanceof AbstractMccc) {
-                    this.mccc.push(mccc);
-                    return this;
-                }
-
-                throw Error('invalid mccc');
-            }
-
-            build() {
-                const builded = [];
-                for (let i = 0; i < this.mccc.length; i += 1) {
-                    builded.push(this.mccc[i].get());
-                }
-                return builded;
-            }
-        }
-
-        return Builder;
-    }
 }
 
 module.exports = Mccc;
