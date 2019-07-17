@@ -35,11 +35,11 @@ class Collect extends AbstractMccc {
         this.requestData.timeout = param;
     }
 
-    static requiredKey() {
+    requiredKey() {
         return ['event-url', 'min', 'max', 'terminators', 'timeout'];
     }
 
-    static action() {
+    action() {
         return 'collect';
     }
 }

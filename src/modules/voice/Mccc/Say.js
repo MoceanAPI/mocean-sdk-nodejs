@@ -23,11 +23,11 @@ class Say extends AbstractMccc {
         return this;
     }
 
-    static requiredKey() {
+    requiredKey() {
         return ['text', 'language'];
     }
 
-    static action() {
+    action() {
         return 'say';
     }
 }

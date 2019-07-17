@@ -15,11 +15,11 @@ class Sleep extends AbstractMccc {
         return this;
     }
 
-    static requiredKey() {
+    requiredKey() {
         return ['duration'];
     }
 
-    static action() {
+    action() {
         return 'sleep';
     }
 }

@@ -15,11 +15,11 @@ class Play extends AbstractMccc {
         return this;
     }
 
-    static requiredKey() {
+    requiredKey() {
         return ['file'];
     }
 
-    static action() {
+    action() {
         return 'play';
     }
 }

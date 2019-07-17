@@ -10,11 +10,11 @@ class Bridge extends AbstractMccc {
         return this;
     }
 
-    static requiredKey() {
+    requiredKey() {
         return ['to'];
     }
 
-    static action() {
+    action() {
         return 'dial';
     }
 }
