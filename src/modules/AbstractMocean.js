@@ -27,7 +27,7 @@ class AbstractMocean {
     createFinalParams() {
         const newParams = {};
         Object.keys(this.params).forEach((key) => {
-            if (this.params[key] !== null && this.params[key].length > 0) {
+            if (this.params[key] !== null && this.params[key] !== undefined) {
                 newParams[key.match(/^mocean-/i) ? key : 'mocean-' + key] = this.params[key];
             }
         });

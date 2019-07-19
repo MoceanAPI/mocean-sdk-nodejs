@@ -16,4 +16,10 @@ describe('McccBuilder Test', () => {
         expect(builder.build()).to.have.lengthOf(2);
         expect(builder.build()[1]).to.eq(play.get());
     });
+
+    it('should throw if add non mccc object', () => {
+        expect(() => {
+            new McccBuilder().add('test');
+        }).to.throw();
+    });
 });

@@ -20,6 +20,7 @@ describe('Collect Test', () => {
         collect.setEventUrl('testing event url');
         collect.setMin(1);
         collect.setMax(10);
+        collect.setTerminators('#');
         collect.setTimeout(10000);
 
         expect(params).to.deep.eq(collect.get());
@@ -31,7 +32,7 @@ describe('Collect Test', () => {
             min: 1,
             max: 10,
             terminators: '#',
-            timeout: 10000,
+            timeout: 10000
         };
         const collect = new Collect(params);
 
