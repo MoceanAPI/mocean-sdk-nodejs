@@ -3,7 +3,9 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
-const { Client, Mocean } = require('../../../src/index');
+const {
+    Client, Mocean, Mccc, McccBuilder
+} = require('../../../src/index');
 const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Voice Test', () => {
@@ -51,6 +53,21 @@ describe('Voice Test', () => {
         expect(voiceCall()).to.be.true;
     });
 
+    it('should accept mcccBuilder as mccc parameter', () => {
+        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
+
+        const mcccBuilder = (new McccBuilder())
+            .add(Mccc.play('hello world'));
+
+        return this.voice
+            .setTo('test to')
+            .setCallControlCommands(mcccBuilder)
+            .call()
+            .then(result => {
+                expect(result).to.equal('promise resolve');
+            });
+    });
+
     it('should return callback on call', () => {
         sinon.stub(this.transmitterStub, 'send').callsArg(3);
 
@@ -68,7 +85,7 @@ describe('Voice Test', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.voice.setTo('test to');
-        this.voice.call()
+        return this.voice.call()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });
