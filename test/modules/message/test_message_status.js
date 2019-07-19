@@ -60,7 +60,7 @@ describe('Message Status Test', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.messageStatus.setMsgid('test msg id');
-        this.messageStatus.inquiry()
+        return this.messageStatus.inquiry()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });

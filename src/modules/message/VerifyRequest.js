@@ -35,11 +35,6 @@ class VerifyRequest extends AbstractMocean {
         return this;
     }
 
-    setTemplate(param) {
-        this.params['mocean-template'] = param;
-        return this;
-    }
-
     setPinValidity(param) {
         this.params['mocean-pin-validity'] = param;
         return this;

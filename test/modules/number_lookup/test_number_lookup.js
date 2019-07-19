@@ -64,7 +64,7 @@ describe('Number Lookup Test', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
         this.numberLookup.setTo('test to');
-        this.numberLookup.inquiry()
+        return this.numberLookup.inquiry()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });

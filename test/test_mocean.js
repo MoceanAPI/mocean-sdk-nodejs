@@ -4,42 +4,6 @@ const expect = chai.expect;
 chai.use(sinonChai);
 const { Client, Mocean } = require('../src/index');
 
-describe('Credentials test', () => {
-    const apiKey = 'testapikey';
-    const apiSecret = 'testapisecret';
-
-    it('should create a credentials object', () => {
-        const credentials = new Client(apiKey, apiSecret);
-
-        expect(credentials).to.be.an('object');
-    });
-
-    it('should expose params from credentials object', () => {
-        const credentials = new Client(apiKey, apiSecret);
-
-        expect(credentials.params).to.be.an('object');
-        expect(credentials.params).to.has.property('mocean-api-key');
-        expect(credentials.params).to.has.property('mocean-api-secret');
-        expect(credentials.params['mocean-api-key']).to.be.a('string');
-        expect(credentials.params['mocean-api-secret']).to.be.a('string');
-        expect(credentials.params['mocean-api-key']).to.equal(apiKey);
-        expect(credentials.params['mocean-api-secret']).to.equal(apiSecret);
-    });
-
-    it('should able to set params through setter', () => {
-        const credentials = new Client();
-
-        expect(credentials.params['mocean-api-key']).to.be.empty;
-        expect(credentials.params['mocean-api-secret']).to.be.empty;
-
-        credentials.setApiKey(apiKey);
-        credentials.setApiSecret(apiSecret);
-
-        expect(credentials.params['mocean-api-key']).to.equal(apiKey);
-        expect(credentials.params['mocean-api-secret']).to.equal(apiSecret);
-    });
-});
-
 describe('Mocean Test', () => {
     const apiKey = 'testapikey';
     const apiSecret = 'testapisecret';
@@ -51,24 +15,30 @@ describe('Mocean Test', () => {
         expect(mocean).to.be.an('object');
     });
 
+    it('should throw error if credential is not client object', () => {
+        expect(() => {
+            new Mocean({});
+        }).to.throw();
+    });
+
     it('should throw error when credentials not set', () => {
         const nullApiKey = () => {
-            Mocean(new Client(null, apiSecret));
+            new Mocean(new Client(null, apiSecret));
         };
         const nullApiSecret = () => {
-            Mocean(new Client(apiKey, null));
+            new Mocean(new Client(apiKey, null));
         };
         const bothNull = () => {
-            Mocean(new Client(null, null));
+            new Mocean(new Client(null, null));
         };
         const emptyApiKey = () => {
-            Mocean(new Client('', apiSecret));
+            new Mocean(new Client('', apiSecret));
         };
         const emptyApiSecret = () => {
-            Mocean(new Client(apiKey, ''));
+            new Mocean(new Client(apiKey, ''));
         };
         const bothEmpty = () => {
-            Mocean(new Client());
+            new Mocean(new Client());
         };
 
         expect(nullApiKey).to.throw();
@@ -93,6 +63,15 @@ describe('Mocean Test', () => {
 
         const sms = require('../src/modules/message/Sms');
         expect(mocean.sms()).to.be.an.instanceOf(sms);
+    });
+
+    it('should export sms object using flashSms', () => {
+        const credentials = new Client(apiKey, apiSecret);
+        const mocean = new Mocean(credentials);
+
+        const sms = require('../src/modules/message/Sms');
+        expect(mocean.flashSms()).to.be.an.instanceOf(sms);
+        expect(mocean.flashSms().flashSms).to.be.true;
     });
 
     it('should expose balance object', () => {
