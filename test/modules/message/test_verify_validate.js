@@ -70,7 +70,7 @@ describe('Verify Validate Test', () => {
 
         this.verifyValidate.setReqid('test req id');
         this.verifyValidate.setCode('test code');
-        this.verifyValidate.send()
+        return this.verifyValidate.send()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });

@@ -40,7 +40,7 @@ describe('Balance Test', () => {
     it('should return promise on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
 
-        this.balance.inquiry()
+        return this.balance.inquiry()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });

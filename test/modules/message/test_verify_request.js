@@ -116,7 +116,7 @@ describe('Verify Request Test', () => {
 
         this.verifyRequest.setTo('test to');
         this.verifyRequest.setBrand('test brand');
-        this.verifyRequest.send()
+        return this.verifyRequest.send()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });

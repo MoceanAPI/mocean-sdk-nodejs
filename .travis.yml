@@ -8,6 +8,12 @@ node_js:
   - 8
   - lts/*
   - node
+
+before_script:
+  - npm i codecov nyc --save-dev
+
 script:
   - npm run lint
-  - npm run test
+  - npm run coverageTest
+
+after_success: npm run coverage

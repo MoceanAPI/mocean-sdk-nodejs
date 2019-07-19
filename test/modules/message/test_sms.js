@@ -24,8 +24,11 @@ describe('SMS Test', () => {
         expect(this.sms.params).to.has.property('mocean-from');
 
         expect(this.sms.params).to.not.has.property('mocean-to');
-        this.sms.setTo('test to');
-        expect(this.sms.params).to.has.property('mocean-to');
+        this.sms.addTo('test to');
+        expect(this.sms.params['mocean-to']).to.eq('test to');
+
+        this.sms.setTo('test to2');
+        expect(this.sms.params['mocean-to']).to.eq('test to2');
 
         expect(this.sms.params).to.not.has.property('mocean-text');
         this.sms.setText('test text');
@@ -51,6 +54,10 @@ describe('SMS Test', () => {
         this.sms.setSchedule('test schedule');
         expect(this.sms.params).to.has.property('mocean-schedule');
 
+        expect(this.sms.params).to.not.has.property('mocean-mclass');
+        this.sms.setMclass('test mclass');
+        expect(this.sms.params).to.has.property('mocean-mclass');
+
         expect(this.sms.params).to.not.has.property('mocean-alt-dcs');
         this.sms.setAltDcs('test alt dcs');
         expect(this.sms.params).to.has.property('mocean-alt-dcs');
@@ -66,6 +73,9 @@ describe('SMS Test', () => {
         expect(this.sms.params).to.not.has.property('mocean-resp-format');
         this.sms.setRespFormat('JSON');
         expect(this.sms.params).to.has.property('mocean-resp-format');
+
+        this.sms.addTo('test to3');
+        expect(this.sms.params['mocean-to']).to.eq('test to2,test to3');
     });
 
     it('should throw error when required field not set', () => {
@@ -112,7 +122,8 @@ describe('SMS Test', () => {
         this.sms.setText('test text');
         this.sms.setFrom('test from');
         this.sms.setTo('test to');
-        this.sms.send()
+        this.sms.flashSms = true;
+        return this.sms.send()
             .then(result => {
                 expect(result).to.equal('promise resolve');
             });
