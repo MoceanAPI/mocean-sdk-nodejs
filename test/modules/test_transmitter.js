@@ -1,58 +1,68 @@
-const chai = require('chai');
-const sinon = require('sinon');
-const sinonChai = require('sinon-chai');
-const expect = chai.expect;
+const chai = require("chai");
+const sinon = require("sinon");
+const sinonChai = require("sinon-chai");
+
+const { expect } = chai;
 chai.use(sinonChai);
-const Transmitter = require('../../src/modules/Transmitter');
+const TestingUtils = require("../testing_utils");
+const Transmitter = require("../../src/modules/Transmitter");
 
-describe('Transmitter test', () => {
-    beforeEach(() => {
-        this.transmitterStub = new Transmitter();
+describe("Transmitter test", () => {
+  beforeEach(() => {
+    this.transmitter = new Transmitter();
+  });
+
+  it("should return err callback if status not equal 0 on send", done => {
+    TestingUtils.makeMockRequest("error_response.json", "/test", "get", 400);
+
+    const fake = sinon.fake(err => {
+      try {
+        expect(err.status).to.eq(1);
+        expect(fake).has.been.called;
+        return done();
+      } catch (e) {
+        return done(e);
+      }
     });
 
-    it('should return callback on send', (done) => {
-        sinon.stub(this.transmitterStub, 'makeRequest').resolves({ status: 'ok' });
-        const fake = sinon.fake((err, res) => {
-            try {
-                expect(fake).has.been.calledOnce;
-                expect(res.status).to.eq('ok');
-            } catch (e) {
-                return done(e);
-            }
-            return done();
-        });
+    this.transmitter.send("get", "/test", { test: "test" }, fake);
+  });
 
-        this.transmitterStub.send('get', '/test', { test: 'test' }, fake);
+  it("should return err callback on send", done => {
+    TestingUtils.makeMockRequest(
+      "error_response.json",
+      "/test",
+      "get",
+      400,
+      true
+    );
+
+    const fake = sinon.fake(err => {
+      try {
+        expect(err.message).to.eq("unknown error");
+        expect(fake).has.been.called;
+        return done();
+      } catch (e) {
+        return done(e);
+      }
     });
 
-    it('should return err callback on send', (done) => {
-        sinon.stub(this.transmitterStub, 'makeRequest').rejects({ status: 'err' });
-        const fake = sinon.fake((err) => {
-            try {
-                expect(fake).has.been.calledOnce;
-                expect(err.status).to.eq('err');
-            } catch (e) {
-                return done(e);
-            }
-            return done();
-        });
+    this.transmitter.send("get", "/test", { test: "test" }, fake);
+  });
 
-        this.transmitterStub.send('get', '/test', { test: 'test' }, fake);
+  it("should throw if unable to parse response", done => {
+    TestingUtils.makeMockRequest("error_response.xml", "/test", "get", 400);
+
+    const fake = sinon.fake(err => {
+      try {
+        expect(err.name).to.eq("SyntaxError");
+        expect(fake).has.been.called;
+        return done();
+      } catch (e) {
+        return done(e);
+      }
     });
 
-    it('should return promise on send', () => {
-        sinon.stub(this.transmitterStub, 'makeRequest').resolves({ status: 'ok' });
-        return this.transmitterStub.send('get', '/test', { test: 'test' })
-            .then(res => {
-                expect(res.status).to.eq('ok');
-            });
-    });
-
-    it('should return error promise on send', () => {
-        sinon.stub(this.transmitterStub, 'makeRequest').rejects({ status: 'err' });
-        return this.transmitterStub.send('get', '/test', { test: 'test' })
-            .catch(err => {
-                expect(err.status).to.eq('err');
-            });
-    });
+    this.transmitter.send("get", "/test", { test: "test" }, fake);
+  });
 });

@@ -1,57 +1,54 @@
-const Transmitter = require('./Transmitter');
+const Transmitter = require("./Transmitter");
 
 class AbstractMocean {
-    constructor(objAuth, options) {
-        this.params = {
-            'mocean-api-key': objAuth.params['mocean-api-key'],
-            'mocean-api-secret': objAuth.params['mocean-api-secret']
-        };
+  constructor(objAuth, options) {
+    this.params = {
+      "mocean-api-key": objAuth.params["mocean-api-key"],
+      "mocean-api-secret": objAuth.params["mocean-api-secret"]
+    };
 
-        // if there's a transmitter client passed in, use that
-        if (options.transmitter) {
-            this.transmitter = options.transmitter;
-        } else {
-            this.transmitter = new Transmitter(options);
-        }
+    // if there's a transmitter client passed in, use that
+    if (options.transmitter) {
+      this.transmitter = options.transmitter;
+    } else {
+      this.transmitter = new Transmitter(options);
     }
+  }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
+  create(params) {
+    this.params = Object.assign({}, this.params, params);
+  }
 
-    create(params) {
-        this.params = Object.assign({}, this.params, params);
-    }
+  createFinalParams() {
+    const newParams = {};
+    Object.keys(this.params).forEach(key => {
+      if (this.params[key] !== null && this.params[key].length > 0) {
+        newParams[key.match(/^mocean-/i) ? key : `mocean-${key}`] = this.params[
+          key
+        ];
+      }
+    });
+    this.params = newParams;
+  }
 
-    createFinalParams() {
-        const newParams = {};
-        Object.keys(this.params).forEach((key) => {
-            if (this.params[key] !== null && this.params[key].length > 0) {
-                newParams[key.match(/^mocean-/i) ? key : 'mocean-' + key] = this.params[key];
-            }
-        });
-        this.params = newParams;
-    }
+  isRequiredFieldSets() {
+    this.requiredField().forEach(requiredField => {
+      if (typeof this.params[requiredField] === "undefined") {
+        throw Error(`${requiredField} is mandatory field.`);
+      }
+    });
+    return true;
+  }
 
-    isRequiredFieldSets() {
-        this.requiredField().forEach((requiredField) => {
-            if (typeof this.params[requiredField] === 'undefined') {
-                throw Error(`${requiredField} is mandatory field.`);
-            }
-        });
-        return true;
-    }
+  createAndValidate(params) {
+    this.create(params);
+    this.createFinalParams();
+    this.isRequiredFieldSets();
+  }
 
-    createAndValidate(params) {
-        this.create(params);
-        this.createFinalParams();
-        this.isRequiredFieldSets();
-    }
-
-    requiredField() {
-        return ['mocean-api-key', 'mocean-api-secret'];
-    }
+  requiredField() {
+    return ["mocean-api-key", "mocean-api-secret"];
+  }
 }
 
 module.exports = AbstractMocean;

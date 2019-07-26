@@ -1,11 +1,11 @@
-const AbstractMocean = require('../AbstractMocean');
+const AbstractMocean = require("../AbstractMocean");
 
 class Balance extends AbstractMocean {
-    inquiry(params = null, callback = null) {
-        this.createAndValidate(params);
+  inquiry(params = null, callback = null) {
+    this.createAndValidate(params);
 
-        return this.transmitter.get('/account/balance', this.params, callback);
-    }
+    return this.transmitter.get("/account/balance", this.params, callback);
+  }
 }
 
 module.exports = Balance;

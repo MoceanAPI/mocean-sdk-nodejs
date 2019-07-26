@@ -1,48 +1,47 @@
-const chai = require('chai');
-const sinon = require('sinon');
-const sinonChai = require('sinon-chai');
-const expect = chai.expect;
+const chai = require("chai");
+const sinon = require("sinon");
+const sinonChai = require("sinon-chai");
+
+const { expect } = chai;
 chai.use(sinonChai);
-const { Client, Mocean } = require('../../../src/index');
-const Transmitter = require('../../../src/modules/Transmitter');
+const TestingUtils = require("../../testing_utils");
+const { Client, Mocean } = require("../../../src/index");
 
-describe('Balance Test', () => {
-    beforeEach(() => {
-        this.transmitterStub = new Transmitter();
-        const apiKey = 'testapikey';
-        const apiSecret = 'testapisecret';
-        const credentials = new Client(apiKey, apiSecret);
-        this.mocean = new Mocean(credentials, {
-            transmitter: this.transmitterStub
-        });
-        this.balance = this.mocean.balance();
+describe("Balance Test", () => {
+  const testObj = res => {
+    expect(res.status).to.eq(0);
+    expect(res.value).to.eq(100);
+  };
+
+  beforeEach(() => {
+    const apiKey = "testapikey";
+    const apiSecret = "testapisecret";
+    const credentials = new Client(apiKey, apiSecret);
+    this.mocean = new Mocean(credentials);
+    this.balance = this.mocean.balance();
+  });
+
+  it("should return callback on inquiry", () => {
+    TestingUtils.makeMockRequest("balance.json", "/account/balance");
+
+    return new Promise((resolve, reject) => {
+      const fake = sinon.fake((err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        testObj(res);
+        expect(fake).has.been.called;
+        return resolve();
+      });
+      this.balance.inquiry(null, fake);
     });
+  });
 
-    it('should set response format through setter', () => {
-        expect(this.balance.params).to.not.has.property('mocean-resp-format');
+  it("should return promise on inquiry", () => {
+    TestingUtils.makeMockRequest("balance.json", "/account/balance");
 
-        this.balance.setRespFormat('JSON');
-        expect(this.balance.params).to.has.property('mocean-resp-format');
+    return this.balance.inquiry().then(res => {
+      testObj(res);
     });
-
-    it('should return callback on inquiry', () => {
-        sinon.stub(this.transmitterStub, 'send').callsArg(3);
-
-        return new Promise((resolve) => {
-            const fake = sinon.fake(() => {
-                expect(fake).has.been.called;
-                resolve();
-            });
-            this.balance.inquiry(null, fake);
-        });
-    });
-
-    it('should return promise on inquiry', () => {
-        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
-
-        return this.balance.inquiry()
-            .then(result => {
-                expect(result).to.equal('promise resolve');
-            });
-    });
+  });
 });
