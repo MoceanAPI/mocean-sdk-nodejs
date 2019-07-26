@@ -3,18 +3,20 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
+const TestingUtils = require('../../testing_utils');
 const { Client, Mocean } = require('../../../src/index');
-const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Verify Validate Test', () => {
+    const testObj = (res) => {
+        expect(res.status).to.eq('0');
+        expect(res.reqid).to.eq('CPASS_restapi_C0000002737000000.0002');
+    };
+
     beforeEach(() => {
-        this.transmitterStub = new Transmitter();
         const apiKey = 'testapikey';
         const apiSecret = 'testapisecret';
         const credentials = new Client(apiKey, apiSecret);
-        this.mocean = new Mocean(credentials, {
-            transmitter: this.transmitterStub
-        });
+        this.mocean = new Mocean(credentials);
         this.verifyValidate = this.mocean.verify_validate();
     });
 
@@ -22,14 +24,16 @@ describe('Verify Validate Test', () => {
         expect(this.verifyValidate.params).to.not.has.property('mocean-reqid');
         this.verifyValidate.setReqid('test req id');
         expect(this.verifyValidate.params).to.has.property('mocean-reqid');
+        expect(this.verifyValidate.params['mocean-reqid']).to.eq('test req id');
 
         expect(this.verifyValidate.params).to.not.has.property('mocean-code');
         this.verifyValidate.setCode('test code');
         expect(this.verifyValidate.params).to.has.property('mocean-code');
+        expect(this.verifyValidate.params['mocean-code']).to.eq('test code');
     });
 
     it('should throw error when required field not set', () => {
-        sinon.stub(this.transmitterStub, 'send').returns('test');
+        TestingUtils.makeMockRequest('verify_code.json', '/verify/check', 'post');
 
         const sendCall = () => {
             this.verifyValidate.send();
@@ -48,13 +52,17 @@ describe('Verify Validate Test', () => {
     });
 
     it('should return callback on send', () => {
-        sinon.stub(this.transmitterStub, 'send').callsArg(3);
+        TestingUtils.makeMockRequest('verify_code.json', '/verify/check', 'post');
 
         this.verifyValidate.setReqid('test req id');
         this.verifyValidate.setCode('test code');
-        return new Promise((resolve) => {
-            const fake = sinon.fake(() => {
-                expect(fake).has.been.calledOnce;
+        return new Promise((resolve, reject) => {
+            const fake = sinon.fake((err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                testObj(res);
+                expect(fake).has.been.called;
                 resolve();
             });
             this.verifyValidate.send(null, fake);
@@ -62,13 +70,13 @@ describe('Verify Validate Test', () => {
     });
 
     it('should return promise on send', () => {
-        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
+        TestingUtils.makeMockRequest('verify_code.json', '/verify/check', 'post');
 
         this.verifyValidate.setReqid('test req id');
         this.verifyValidate.setCode('test code');
         return this.verifyValidate.send()
-            .then(result => {
-                expect(result).to.equal('promise resolve');
+            .then(res => {
+                testObj(res);
             });
     });
 });

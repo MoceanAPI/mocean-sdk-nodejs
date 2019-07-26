@@ -3,18 +3,20 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
+const TestingUtils = require('../../testing_utils');
 const { Client, Mocean } = require('../../../src/index');
-const Transmitter = require('../../../src/modules/Transmitter');
 
 describe('Verify Request Test', () => {
+    const testObj = (res) => {
+        expect(res.status).to.eq('0');
+        expect(res.reqid).to.eq('CPASS_restapi_C0000002737000000.0002');
+    };
+
     beforeEach(() => {
-        this.transmitterStub = new Transmitter();
         const apiKey = 'testapikey';
         const apiSecret = 'testapisecret';
         const credentials = new Client(apiKey, apiSecret);
-        this.mocean = new Mocean(credentials, {
-            transmitter: this.transmitterStub
-        });
+        this.mocean = new Mocean(credentials);
         this.verifyRequest = this.mocean.verify_request();
     });
 
@@ -22,60 +24,61 @@ describe('Verify Request Test', () => {
         expect(this.verifyRequest.params).to.not.has.property('mocean-brand');
         this.verifyRequest.setBrand('test brand');
         expect(this.verifyRequest.params).to.has.property('mocean-brand');
+        expect(this.verifyRequest.params['mocean-brand']).to.eq('test brand');
 
         expect(this.verifyRequest.params).to.not.has.property('mocean-from');
         this.verifyRequest.setFrom('test from');
         expect(this.verifyRequest.params).to.has.property('mocean-from');
+        expect(this.verifyRequest.params['mocean-from']).to.eq('test from');
 
         expect(this.verifyRequest.params).to.not.has.property('mocean-to');
         this.verifyRequest.setTo('test to');
         expect(this.verifyRequest.params).to.has.property('mocean-to');
+        expect(this.verifyRequest.params['mocean-to']).to.eq('test to');
 
         expect(this.verifyRequest.params).to.not.has.property('mocean-code-length');
         this.verifyRequest.setCodeLength('test code length');
         expect(this.verifyRequest.params).to.has.property('mocean-code-length');
+        expect(this.verifyRequest.params['mocean-code-length']).to.eq('test code length');
 
         expect(this.verifyRequest.params).to.not.has.property('mocean-pin-validity');
         this.verifyRequest.setPinValidity('test pin validity');
         expect(this.verifyRequest.params).to.has.property('mocean-pin-validity');
+        expect(this.verifyRequest.params['mocean-pin-validity']).to.eq('test pin validity');
 
         expect(this.verifyRequest.params).to.not.has.property('mocean-next-event-wait');
         this.verifyRequest.setNextEventWait('test next event wait');
         expect(this.verifyRequest.params).to.has.property('mocean-next-event-wait');
+        expect(this.verifyRequest.params['mocean-next-event-wait']).to.eq('test next event wait');
 
         expect(this.verifyRequest.params).to.not.has.property('mocean-reqid');
         this.verifyRequest.setReqId('test req id');
         expect(this.verifyRequest.params).to.has.property('mocean-reqid');
+        expect(this.verifyRequest.params['mocean-reqid']).to.eq('test req id');
     });
 
     it('should send as sms channel', () => {
-        sinon.stub(this.transmitterStub, 'send').onCall(0).callsFake((method, uri) => {
-            expect(method).to.equal('post');
-            expect(uri).to.equal('/verify/req/sms');
-        });
+        TestingUtils.makeMockRequest('send_code.json', '/verify/req/sms', 'post');
 
         this.verifyRequest.sendAs('sms');
         expect(this.verifyRequest.channel).to.equal('sms');
 
         this.verifyRequest.setTo('test to');
         this.verifyRequest.setBrand('test brand');
-        this.verifyRequest.send();
+        return this.verifyRequest.send();
     });
 
     it('should resend verify request when requested', () => {
+        TestingUtils.makeMockRequest('resend_code.json', '/verify/resend/sms', 'post');
+
         this.verifyRequest = this.mocean.verify_request(true);
 
-        sinon.stub(this.transmitterStub, 'send').onCall(0).callsFake((method, uri) => {
-            expect(method).to.equal('post');
-            expect(uri).to.equal('/verify/resend/sms');
-        });
-
         this.verifyRequest.setReqId('test req id');
-        this.verifyRequest.resend();
+        return this.verifyRequest.resend();
     });
 
     it('should throw error when required field not set', () => {
-        sinon.stub(this.transmitterStub, 'send').returns('test');
+        TestingUtils.makeMockRequest('send_code.json', '/verify/req', 'post');
 
         const sendCall = () => {
             this.verifyRequest.send();
@@ -94,12 +97,16 @@ describe('Verify Request Test', () => {
     });
 
     it('should return callback on send', () => {
-        sinon.stub(this.transmitterStub, 'send').callsArg(3);
+        TestingUtils.makeMockRequest('send_code.json', '/verify/req', 'post');
 
         this.verifyRequest.setTo('test to');
         this.verifyRequest.setBrand('test brand');
-        return new Promise((resolve) => {
-            const fake = sinon.fake(() => {
+        return new Promise((resolve, reject) => {
+            const fake = sinon.fake((err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                testObj(res);
                 expect(fake).has.been.calledOnce;
                 resolve();
             });
@@ -108,13 +115,13 @@ describe('Verify Request Test', () => {
     });
 
     it('should return promise on send', () => {
-        sinon.stub(this.transmitterStub, 'send').resolves('promise resolve');
+        TestingUtils.makeMockRequest('send_code.json', '/verify/req', 'post');
 
         this.verifyRequest.setTo('test to');
         this.verifyRequest.setBrand('test brand');
         return this.verifyRequest.send()
-            .then(result => {
-                expect(result).to.equal('promise resolve');
+            .then(res => {
+                testObj(res);
             });
     });
 });
