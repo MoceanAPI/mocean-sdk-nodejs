@@ -1,22 +1,22 @@
-const AbstractMccc = require('./AbstractMccc');
+const AbstractMccc = require("./AbstractMccc");
 
 class Bridge extends AbstractMccc {
-    constructor(params = null) {
-        super(params);
-    }
+  constructor(params = null) {
+    super(params);
+  }
 
-    setTo(param) {
-        this.requestData.to = param;
-        return this;
-    }
+  setTo(param) {
+    this.requestData.to = param;
+    return this;
+  }
 
-    requiredKey() {
-        return ['to'];
-    }
+  requiredKey() {
+    return ["to"];
+  }
 
-    action() {
-        return 'dial';
-    }
+  action() {
+    return "dial";
+  }
 }
 
 module.exports = Bridge;

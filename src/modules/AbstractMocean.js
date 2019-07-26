@@ -19,15 +19,17 @@ class AbstractMocean {
     this.params = Object.assign({}, this.params, params);
   }
 
-    createFinalParams() {
-        const newParams = {};
-        Object.keys(this.params).forEach((key) => {
-            if (this.params[key] !== null && this.params[key] !== undefined) {
-                newParams[key.match(/^mocean-/i) ? key : 'mocean-' + key] = this.params[key];
-            }
-        });
-        this.params = newParams;
-    }
+  createFinalParams() {
+    const newParams = {};
+    Object.keys(this.params).forEach(key => {
+      if (this.params[key] !== null && this.params[key] !== undefined) {
+        newParams[key.match(/^mocean-/i) ? key : `mocean-${key}`] = this.params[
+          key
+        ];
+      }
+    });
+    this.params = newParams;
+  }
 
   isRequiredFieldSets() {
     this.requiredField().forEach(requiredField => {

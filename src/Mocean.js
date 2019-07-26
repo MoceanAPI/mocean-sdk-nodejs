@@ -56,10 +56,10 @@ class Mocean {
     const NumberLookup = require("./modules/number_lookup/NumberLookup");
     return new NumberLookup(this.obj_auth, this.options);
   }
-  
+
   voice() {
-      const Voice = require('./modules/voice/Voice');
-      return new Voice(this.obj_auth, this.options);
+    const Voice = require("./modules/voice/Voice");
+    return new Voice(this.obj_auth, this.options);
   }
 }
 

@@ -1,41 +1,42 @@
-const chai = require('chai');
-const expect = chai.expect;
-const { Say } = require('../../../../src/modules/voice/Mccc/index');
+const chai = require("chai");
 
-describe('Say Test', () => {
-    it('should return mccc object', () => {
-        const params = {
-            language: 'testing language',
-            text: 'testing text',
-            'barge-in': true,
-            action: 'say'
-        };
-        let say = new Say(params);
+const { expect } = chai;
+const { Say } = require("../../../../src/modules/voice/Mccc/index");
 
-        expect(params).to.deep.eq(say.get());
+describe("Say Test", () => {
+  it("should return mccc object", () => {
+    const params = {
+      language: "testing language",
+      text: "testing text",
+      "barge-in": true,
+      action: "say"
+    };
+    let say = new Say(params);
 
-        say = new Say();
-        say.setLanguage('testing language');
-        say.setText('testing text');
-        say.setBargeIn(true);
+    expect(params).to.deep.eq(say.get());
 
-        expect(params).to.deep.eq(say.get());
-    });
+    say = new Say();
+    say.setLanguage("testing language");
+    say.setText("testing text");
+    say.setBargeIn(true);
 
-    it('should auto define action', () => {
-        const params = {
-            language: 'testing language',
-            text: 'testing text',
-            'barge-in': true
-        };
-        const say = new Say(params);
+    expect(params).to.deep.eq(say.get());
+  });
 
-        expect(say.get().action).to.eq('say');
-    });
+  it("should auto define action", () => {
+    const params = {
+      language: "testing language",
+      text: "testing text",
+      "barge-in": true
+    };
+    const say = new Say(params);
 
-    it('should throw if required field not set', () => {
-        expect(() => {
-            new Say().get();
-        }).to.throw();
-    });
+    expect(say.get().action).to.eq("say");
+  });
+
+  it("should throw if required field not set", () => {
+    expect(() => {
+      new Say().get();
+    }).to.throw();
+  });
 });

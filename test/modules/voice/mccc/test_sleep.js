@@ -1,38 +1,39 @@
-const chai = require('chai');
-const expect = chai.expect;
-const { Sleep } = require('../../../../src/modules/voice/Mccc/index');
+const chai = require("chai");
 
-describe('Sleep Test', () => {
-    it('should return mccc object', () => {
-        const params = {
-            duration: 10000,
-            'barge-in': true,
-            action: 'sleep'
-        };
-        let sleep = new Sleep(params);
+const { expect } = chai;
+const { Sleep } = require("../../../../src/modules/voice/Mccc/index");
 
-        expect(params).to.deep.eq(sleep.get());
+describe("Sleep Test", () => {
+  it("should return mccc object", () => {
+    const params = {
+      duration: 10000,
+      "barge-in": true,
+      action: "sleep"
+    };
+    let sleep = new Sleep(params);
 
-        sleep = new Sleep();
-        sleep.setDuration(10000);
-        sleep.setBargeIn(true);
+    expect(params).to.deep.eq(sleep.get());
 
-        expect(params).to.deep.eq(sleep.get());
-    });
+    sleep = new Sleep();
+    sleep.setDuration(10000);
+    sleep.setBargeIn(true);
 
-    it('should auto define action', () => {
-        const params = {
-            duration: 10000,
-            'barge-in': true
-        };
-        const sleep = new Sleep(params);
+    expect(params).to.deep.eq(sleep.get());
+  });
 
-        expect(sleep.get().action).to.eq('sleep');
-    });
+  it("should auto define action", () => {
+    const params = {
+      duration: 10000,
+      "barge-in": true
+    };
+    const sleep = new Sleep(params);
 
-    it('should throw if required field not set', () => {
-        expect(() => {
-            new Sleep().get();
-        }).to.throw();
-    });
+    expect(sleep.get().action).to.eq("sleep");
+  });
+
+  it("should throw if required field not set", () => {
+    expect(() => {
+      new Sleep().get();
+    }).to.throw();
+  });
 });

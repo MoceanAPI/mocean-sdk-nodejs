@@ -1,38 +1,39 @@
-const chai = require('chai');
-const expect = chai.expect;
-const { Play } = require('../../../../src/modules/voice/Mccc/index');
+const chai = require("chai");
 
-describe('Play Test', () => {
-    it('should return mccc object', () => {
-        const params = {
-            file: 'testing file',
-            'barge-in': true,
-            action: 'play'
-        };
-        let play = new Play(params);
+const { expect } = chai;
+const { Play } = require("../../../../src/modules/voice/Mccc/index");
 
-        expect(params).to.deep.eq(play.get());
+describe("Play Test", () => {
+  it("should return mccc object", () => {
+    const params = {
+      file: "testing file",
+      "barge-in": true,
+      action: "play"
+    };
+    let play = new Play(params);
 
-        play = new Play();
-        play.setFiles('testing file');
-        play.setBargeIn(true);
+    expect(params).to.deep.eq(play.get());
 
-        expect(params).to.deep.eq(play.get());
-    });
+    play = new Play();
+    play.setFiles("testing file");
+    play.setBargeIn(true);
 
-    it('should auto define action', () => {
-        const params = {
-            file: 'testing file',
-            'barge-in': true
-        };
-        const play = new Play(params);
+    expect(params).to.deep.eq(play.get());
+  });
 
-        expect(play.get().action).to.eq('play');
-    });
+  it("should auto define action", () => {
+    const params = {
+      file: "testing file",
+      "barge-in": true
+    };
+    const play = new Play(params);
 
-    it('should throw if required field not set', () => {
-        expect(() => {
-            new Play().get();
-        }).to.throw();
-    });
+    expect(play.get().action).to.eq("play");
+  });
+
+  it("should throw if required field not set", () => {
+    expect(() => {
+      new Play().get();
+    }).to.throw();
+  });
 });

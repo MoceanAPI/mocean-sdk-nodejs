@@ -1,27 +1,27 @@
-const AbstractMccc = require('./AbstractMccc');
+const AbstractMccc = require("./AbstractMccc");
 
 class Play extends AbstractMccc {
-    constructor(params = null) {
-        super(params);
-    }
+  constructor(params = null) {
+    super(params);
+  }
 
-    setFiles(param) {
-        this.requestData.file = param;
-        return this;
-    }
+  setFiles(param) {
+    this.requestData.file = param;
+    return this;
+  }
 
-    setBargeIn(param) {
-        this.requestData['barge-in'] = param;
-        return this;
-    }
+  setBargeIn(param) {
+    this.requestData["barge-in"] = param;
+    return this;
+  }
 
-    requiredKey() {
-        return ['file'];
-    }
+  requiredKey() {
+    return ["file"];
+  }
 
-    action() {
-        return 'play';
-    }
+  action() {
+    return "play";
+  }
 }
 
 module.exports = Play;

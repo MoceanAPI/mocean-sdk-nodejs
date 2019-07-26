@@ -1,57 +1,55 @@
-const {
-    Say, Bridge, Collect, Play, Sleep
-} = require('./Mccc/index');
+const { Say, Bridge, Collect, Play, Sleep } = require("./Mccc/index");
 
 class Mccc {
-    static say(text = null) {
-        const ins = new Say();
+  static say(text = null) {
+    const ins = new Say();
 
-        if (text) {
-            ins.setText(text);
-        }
-
-        return ins;
+    if (text) {
+      ins.setText(text);
     }
 
-    static play(file = null) {
-        const ins = new Play();
+    return ins;
+  }
 
-        if (file) {
-            ins.setFiles(file);
-        }
+  static play(file = null) {
+    const ins = new Play();
 
-        return ins;
+    if (file) {
+      ins.setFiles(file);
     }
 
-    static bridge(to = null) {
-        const ins = new Bridge();
+    return ins;
+  }
 
-        if (to) {
-            ins.setTo(to);
-        }
+  static bridge(to = null) {
+    const ins = new Bridge();
 
-        return ins;
+    if (to) {
+      ins.setTo(to);
     }
 
-    static collect(eventUrl = null) {
-        const ins = new Collect();
+    return ins;
+  }
 
-        if (eventUrl) {
-            ins.setEventUrl(eventUrl);
-        }
+  static collect(eventUrl = null) {
+    const ins = new Collect();
 
-        return ins;
+    if (eventUrl) {
+      ins.setEventUrl(eventUrl);
     }
 
-    static sleep(duration = null) {
-        const ins = new Sleep();
+    return ins;
+  }
 
-        if (duration) {
-            ins.setDuration(duration);
-        }
+  static sleep(duration = null) {
+    const ins = new Sleep();
 
-        return ins;
+    if (duration) {
+      ins.setDuration(duration);
     }
+
+    return ins;
+  }
 }
 
 module.exports = Mccc;

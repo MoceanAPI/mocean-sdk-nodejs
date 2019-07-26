@@ -1,35 +1,36 @@
-const chai = require('chai');
-const expect = chai.expect;
-const { Bridge } = require('../../../../src/modules/voice/Mccc/index');
+const chai = require("chai");
 
-describe('Bridge Test', () => {
-    it('should return mccc object', () => {
-        const params = {
-            to: 'testing to',
-            action: 'dial'
-        };
-        let bridge = new Bridge(params);
+const { expect } = chai;
+const { Bridge } = require("../../../../src/modules/voice/Mccc/index");
 
-        expect(params).to.deep.eq(bridge.get());
+describe("Bridge Test", () => {
+  it("should return mccc object", () => {
+    const params = {
+      to: "testing to",
+      action: "dial"
+    };
+    let bridge = new Bridge(params);
 
-        bridge = new Bridge();
-        bridge.setTo('testing to');
+    expect(params).to.deep.eq(bridge.get());
 
-        expect(params).to.deep.eq(bridge.get());
-    });
+    bridge = new Bridge();
+    bridge.setTo("testing to");
 
-    it('should auto define action', () => {
-        const params = {
-            to: 'testing to'
-        };
-        const bridge = new Bridge(params);
+    expect(params).to.deep.eq(bridge.get());
+  });
 
-        expect(bridge.get().action).to.eq('dial');
-    });
+  it("should auto define action", () => {
+    const params = {
+      to: "testing to"
+    };
+    const bridge = new Bridge(params);
 
-    it('should throw if required field not set', () => {
-        expect(() => {
-            new Bridge().get();
-        }).to.throw();
-    });
+    expect(bridge.get().action).to.eq("dial");
+  });
+
+  it("should throw if required field not set", () => {
+    expect(() => {
+      new Bridge().get();
+    }).to.throw();
+  });
 });

@@ -1,35 +1,37 @@
-const AbstractMccc = require('./AbstractMccc');
+const AbstractMccc = require("./AbstractMccc");
 
 class Say extends AbstractMccc {
-    constructor(params = null) {
-        super(params);
+  constructor(params = null) {
+    super(params);
 
-        // default value
-        this.requestData.language = this.requestData.language ? this.requestData.language : 'en-US';
-    }
+    // default value
+    this.requestData.language = this.requestData.language
+      ? this.requestData.language
+      : "en-US";
+  }
 
-    setLanguage(param) {
-        this.requestData.language = param;
-        return this;
-    }
+  setLanguage(param) {
+    this.requestData.language = param;
+    return this;
+  }
 
-    setText(param) {
-        this.requestData.text = param;
-        return this;
-    }
+  setText(param) {
+    this.requestData.text = param;
+    return this;
+  }
 
-    setBargeIn(param) {
-        this.requestData['barge-in'] = param;
-        return this;
-    }
+  setBargeIn(param) {
+    this.requestData["barge-in"] = param;
+    return this;
+  }
 
-    requiredKey() {
-        return ['text', 'language'];
-    }
+  requiredKey() {
+    return ["text", "language"];
+  }
 
-    action() {
-        return 'say';
-    }
+  action() {
+    return "say";
+  }
 }
 
 module.exports = Say;
