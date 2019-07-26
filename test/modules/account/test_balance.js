@@ -18,13 +18,6 @@ describe('Balance Test', () => {
         this.balance = this.mocean.balance();
     });
 
-    it('should set response format through setter', () => {
-        expect(this.balance.params).to.not.has.property('mocean-resp-format');
-
-        this.balance.setRespFormat('JSON');
-        expect(this.balance.params).to.has.property('mocean-resp-format');
-    });
-
     it('should return callback on inquiry', () => {
         sinon.stub(this.transmitterStub, 'send').callsArg(3);
 

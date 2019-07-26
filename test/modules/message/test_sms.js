@@ -70,10 +70,6 @@ describe('SMS Test', () => {
         this.sms.setValidity('test validity');
         expect(this.sms.params).to.has.property('mocean-validity');
 
-        expect(this.sms.params).to.not.has.property('mocean-resp-format');
-        this.sms.setRespFormat('JSON');
-        expect(this.sms.params).to.has.property('mocean-resp-format');
-
         this.sms.addTo('test to3');
         expect(this.sms.params['mocean-to']).to.eq('test to2,test to3');
     });

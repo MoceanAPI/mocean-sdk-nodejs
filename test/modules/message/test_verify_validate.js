@@ -26,10 +26,6 @@ describe('Verify Validate Test', () => {
         expect(this.verifyValidate.params).to.not.has.property('mocean-code');
         this.verifyValidate.setCode('test code');
         expect(this.verifyValidate.params).to.has.property('mocean-code');
-
-        expect(this.verifyValidate.params).to.not.has.property('mocean-resp-format');
-        this.verifyValidate.setRespFormat('JSON');
-        expect(this.verifyValidate.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {

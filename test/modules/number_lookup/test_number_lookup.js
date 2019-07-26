@@ -26,10 +26,6 @@ describe('Number Lookup Test', () => {
         expect(this.numberLookup.params).to.not.has.property('mocean-nl-url');
         this.numberLookup.setNlUrl('test nl url');
         expect(this.numberLookup.params).to.has.property('mocean-nl-url');
-
-        expect(this.numberLookup.params).to.not.has.property('mocean-resp-format');
-        this.numberLookup.setRespFormat('JSON');
-        expect(this.numberLookup.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {

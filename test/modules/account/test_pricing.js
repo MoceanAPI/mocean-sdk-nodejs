@@ -30,10 +30,6 @@ describe('Pricing Test', () => {
         expect(this.pricing.params).to.not.has.property('mocean-delimiter');
         this.pricing.setDelimiter('test delimiter');
         expect(this.pricing.params).to.has.property('mocean-delimiter');
-
-        expect(this.pricing.params).to.not.has.property('mocean-resp-format');
-        this.pricing.setRespFormat('JSON');
-        expect(this.pricing.params).to.has.property('mocean-resp-format');
     });
 
     it('should return callback on inquiry', () => {

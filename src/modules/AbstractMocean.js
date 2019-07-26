@@ -15,11 +15,6 @@ class AbstractMocean {
         }
     }
 
-    setRespFormat(param) {
-        this.params['mocean-resp-format'] = param;
-        return this;
-    }
-
     create(params) {
         this.params = Object.assign({}, this.params, params);
     }

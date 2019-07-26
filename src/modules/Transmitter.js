@@ -27,10 +27,8 @@ class Transmitter {
             clonedParams['mocean-medium'] = 'NODEJS-SDK';
         }
 
-        // use json if default not set;
-        if (!clonedParams['mocean-resp-format']) {
-            clonedParams['mocean-resp-format'] = 'json';
-        }
+        // use json
+        clonedParams['mocean-resp-format'] = 'json';
 
         const response = this.makeRequest({
             baseUrl: this.options.baseUrl + '/rest/' + this.options.version,
@@ -70,8 +68,7 @@ class Transmitter {
 
                     return resolve(parsedBody);
                 } catch (e) {
-                    // simple resolve xml response
-                    return resolve(body);
+                    return reject(e);
                 }
             });
         });

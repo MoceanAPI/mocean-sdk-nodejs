@@ -46,10 +46,6 @@ describe('Verify Request Test', () => {
         expect(this.verifyRequest.params).to.not.has.property('mocean-reqid');
         this.verifyRequest.setReqId('test req id');
         expect(this.verifyRequest.params).to.has.property('mocean-reqid');
-
-        expect(this.verifyRequest.params).to.not.has.property('mocean-resp-format');
-        this.verifyRequest.setRespFormat('JSON');
-        expect(this.verifyRequest.params).to.has.property('mocean-resp-format');
     });
 
     it('should send as sms channel', () => {

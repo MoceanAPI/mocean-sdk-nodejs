@@ -22,10 +22,6 @@ describe('Message Status Test', () => {
         expect(this.messageStatus.params).to.not.has.property('mocean-msgid');
         this.messageStatus.setMsgid('test msg id');
         expect(this.messageStatus.params).to.has.property('mocean-msgid');
-
-        expect(this.messageStatus.params).to.not.has.property('mocean-resp-format');
-        this.messageStatus.setRespFormat('JSON');
-        expect(this.messageStatus.params).to.has.property('mocean-resp-format');
     });
 
     it('should throw error when required field not set', () => {
