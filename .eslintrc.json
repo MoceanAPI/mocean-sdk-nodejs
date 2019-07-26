@@ -4,41 +4,23 @@
     "node": true,
     "mocha": true
   },
-  "extends": "airbnb-base/legacy",
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaVersion": 5,
     "sourceType": "module"
   },
   "rules": {
-    "prefer-const": "warn",
-    "no-var": "error",
-    "no-shadow": "off",
-    "max-len": "warn",
-    "no-multi-assign": "off",
-    "no-unused-vars": "error",
+    "prettier/prettier": "error",
     "no-unused-expressions": "warn",
-    "no-console": "warn",
     "no-restricted-syntax": "off",
-    "no-await-in-loop": "off",
-    "prefer-promise-reject-errors": "off",
     "global-require": "off",
-    "camelcase": "off",
-    "consistent-return": "off",
-    "no-param-reassign": "warn",
     "class-methods-use-this": "off",
-    "no-new": "off",
-    "indent": [
-      "error",
-      4
-    ],
-    "linebreak-style": "off",
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+    "no-new": "warn"
   }
 }
