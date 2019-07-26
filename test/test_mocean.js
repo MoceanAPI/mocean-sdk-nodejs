@@ -3,6 +3,7 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 const { Client, Mocean } = require('../src/index');
+const Transmitter = require('../src/modules/Transmitter');
 
 describe('Mocean Test', () => {
     const apiKey = 'testapikey';
@@ -47,6 +48,15 @@ describe('Mocean Test', () => {
         expect(emptyApiKey).to.throw();
         expect(emptyApiSecret).to.throw();
         expect(bothEmpty).to.throw();
+    });
+
+    it('should inject transmitter when passed in by constructor', () => {
+        const transmmiter = new Transmitter({
+            baseUrl: 'http://test.com'
+        });
+        const credentials = new Client(apiKey, apiSecret);
+        const mocean = new Mocean(credentials, { transmitter: transmmiter });
+        expect(mocean.sms().transmitter).to.eq(transmmiter);
     });
 
     it('should describe obj_auth as an credentials object', () => {
