@@ -1,20 +1,20 @@
-const AbstractMocean = require('../AbstractMocean');
+const AbstractMocean = require("../AbstractMocean");
 
 class MessageStatus extends AbstractMocean {
-    requiredField() {
-        return [...super.requiredField(), ...['mocean-msgid']];
-    }
+  requiredField() {
+    return [...super.requiredField(), ...["mocean-msgid"]];
+  }
 
-    setMsgid(param) {
-        this.params['mocean-msgid'] = param;
-        return this;
-    }
+  setMsgid(param) {
+    this.params["mocean-msgid"] = param;
+    return this;
+  }
 
-    inquiry(params = null, callback = null) {
-        this.createAndValidate(params);
+  inquiry(params = null, callback = null) {
+    this.createAndValidate(params);
 
-        return this.transmitter.get('/report/message', this.params, callback);
-    }
+    return this.transmitter.get("/report/message", this.params, callback);
+  }
 }
 
 module.exports = MessageStatus;

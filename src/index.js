@@ -1,7 +1,7 @@
-const Client = require('./Client');
-const Mocean = require('./Mocean');
+const Client = require("./Client");
+const Mocean = require("./Mocean");
 
 module.exports = {
-    Client,
-    Mocean
+  Client,
+  Mocean
 };
