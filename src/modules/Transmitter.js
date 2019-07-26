@@ -63,7 +63,7 @@ class Transmitter {
                 try {
                     const parsedBody = JSON.parse(body);
                     if (parsedBody.status && parsedBody.status !== 0 && parsedBody.status !== '0') {
-                        return reject(parsedBody.err_msg);
+                        return reject(parsedBody);
                     }
 
                     return resolve(parsedBody);
