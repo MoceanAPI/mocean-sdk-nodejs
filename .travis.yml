@@ -1,11 +1,10 @@
-os:
-  - windows
-  - linux
-  - osx
 language: node_js
 node_js:
   - 6
+  - 7
   - 8
+  - 9
+  - 11
   - lts/*
   - node
 
@@ -17,3 +16,12 @@ script:
   - npm run coverageTest
 
 after_success: npm run coverage
+deploy:
+  provider: npm
+  email: sdk@moceanapi.com
+  api_key:
+    secure: ivlYnfDxmm/tCe2e6uLOM8jwHoMLzo4UBSoYF98EsCPZmG6Q0kQyehvNTmsFPuD8JHc9q/fSqY/WTeZYIraGjnLYPOaltZ2Un6H+Ue+Tasdy0HQ6Ue2KzlOueZpXLSnuBCp5W+rZKG3HSCOsRUHnt6dKGLEsIbhwupNCcFvC/PpUjEhyJvtze/tHO0Zqf39N41AZfG04fgbVK1tStu+IZL02V1CbX/+HjcOC3vctf1UqAQmscfVs4C3sPeZBt6WUgh2x/ZctGj4qlcrVOQ2I3MAS5i8Ak5MR6FB1dukx4itJroR6asvFXMcWS0ljNHzJwIMl2QlspkAVobCFYYTBVtkCNpcZeQhrPGTAwsZ9KjA+tdGgYTWQXfFhVjqNpKqZ2vMTJmcDRY9cOAqBIkkWLMLFXeWlGB8purACRoaGXlX36GeOnMPw2YvS6cUWAveoCNYOjz5dhOk0UZvQ4mBIcU4K2x4XNFIqr1dmnBgXmeHbQE3DVOJHlKXDLqSgD1tkwothi3RAzQzJXFRy0gqVpHQvT+Rqt+HMrWnaZX5pu4I13WxLhnFgoogG8EH+a1Z0ycz3ti939QMfC7/Lpjmhhctk2N688rFd1SPoyxcpFA8y9XVbqno6lRP9qmTXbyfK0LYNgA33jP3NllLzLbGm82iE+vb+nU5yQaRkjmvDulc=
+  on:
+    tags: true
+    node: node
+  skip_cleanup: true
