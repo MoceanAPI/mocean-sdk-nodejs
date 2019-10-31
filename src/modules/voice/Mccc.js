@@ -1,4 +1,4 @@
-const { Say, Bridge, Collect, Play, Sleep } = require("./Mccc/index");
+const { Say, Dial, Collect, Play, Sleep, Record } = require("./Mccc/index");
 
 class Mccc {
   static say(text = null) {
@@ -21,8 +21,8 @@ class Mccc {
     return ins;
   }
 
-  static bridge(to = null) {
-    const ins = new Bridge();
+  static dial(to = null) {
+    const ins = new Dial();
 
     if (to) {
       ins.setTo(to);
@@ -49,6 +49,10 @@ class Mccc {
     }
 
     return ins;
+  }
+
+  static record() {
+    return new Record();
   }
 }
 

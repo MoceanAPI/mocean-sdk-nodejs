@@ -7,7 +7,6 @@ describe("Sleep Test", () => {
   it("should return mccc object", () => {
     const params = {
       duration: 10000,
-      "barge-in": true,
       action: "sleep"
     };
     let sleep = new Sleep(params);
@@ -16,7 +15,6 @@ describe("Sleep Test", () => {
 
     sleep = new Sleep();
     sleep.setDuration(10000);
-    sleep.setBargeIn(true);
 
     expect(params).to.deep.eq(sleep.get());
   });

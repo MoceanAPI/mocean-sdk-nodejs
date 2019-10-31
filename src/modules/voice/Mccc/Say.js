@@ -25,6 +25,11 @@ class Say extends AbstractMccc {
     return this;
   }
 
+  setClearDigitCache(param) {
+    this.requestData["clear-digit-cache"] = param;
+    return this;
+  }
+
   requiredKey() {
     return ["text", "language"];
   }

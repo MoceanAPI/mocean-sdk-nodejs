@@ -61,7 +61,7 @@ describe("Voice Test", () => {
   });
 
   it("should accept mcccBuilder as mccc parameter", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "get");
+    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
 
     const mcccBuilder = new McccBuilder().add(Mccc.play("hello world"));
 
@@ -75,7 +75,7 @@ describe("Voice Test", () => {
   });
 
   it("should return callback on call", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "get");
+    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
 
     this.voice.setTo("test to");
     return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ describe("Voice Test", () => {
   });
 
   it("should return promise on call", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "get");
+    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
 
     this.voice.setTo("test to");
     return this.voice.call().then(res => {

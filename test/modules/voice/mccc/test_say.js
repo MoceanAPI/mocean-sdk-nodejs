@@ -9,6 +9,7 @@ describe("Say Test", () => {
       language: "testing language",
       text: "testing text",
       "barge-in": true,
+      "clear-digit-cache": true,
       action: "say"
     };
     let say = new Say(params);
@@ -19,6 +20,7 @@ describe("Say Test", () => {
     say.setLanguage("testing language");
     say.setText("testing text");
     say.setBargeIn(true);
+    say.setClearDigitCache(true);
 
     expect(params).to.deep.eq(say.get());
   });

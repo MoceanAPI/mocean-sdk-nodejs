@@ -37,7 +37,7 @@ class Voice extends AbstractMocean {
       );
     }
 
-    return this.transmitter.get("/voice/dial", this.params, callback);
+    return this.transmitter.post("/voice/dial", this.params, callback);
   }
 }
 

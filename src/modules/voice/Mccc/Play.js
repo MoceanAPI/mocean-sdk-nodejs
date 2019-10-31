@@ -1,10 +1,6 @@
 const AbstractMccc = require("./AbstractMccc");
 
 class Play extends AbstractMccc {
-  constructor(params = null) {
-    super(params);
-  }
-
   setFiles(param) {
     this.requestData.file = param;
     return this;
@@ -12,6 +8,11 @@ class Play extends AbstractMccc {
 
   setBargeIn(param) {
     this.requestData["barge-in"] = param;
+    return this;
+  }
+
+  setClearDigitCache(param) {
+    this.requestData["clear-digit-cache"] = param;
     return this;
   }
 

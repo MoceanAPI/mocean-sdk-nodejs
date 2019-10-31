@@ -8,6 +8,7 @@ describe("Play Test", () => {
     const params = {
       file: "testing file",
       "barge-in": true,
+      "clear-digit-cache": true,
       action: "play"
     };
     let play = new Play(params);
@@ -17,6 +18,7 @@ describe("Play Test", () => {
     play = new Play();
     play.setFiles("testing file");
     play.setBargeIn(true);
+    play.setClearDigitCache(true);
 
     expect(params).to.deep.eq(play.get());
   });
