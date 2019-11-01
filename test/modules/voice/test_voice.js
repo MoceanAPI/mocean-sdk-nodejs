@@ -9,9 +9,12 @@ const { Client, Mocean, Mccc, McccBuilder } = require("../../../src/index");
 
 describe("Voice Test", () => {
   const testObj = res => {
-    expect(res.status).to.eq(0);
-    expect(res["session-uuid"]).to.eq("xxx-xxx-xxx-xxx");
-    expect(res["call-uuid"]).to.eq("xxx-xxx-xxx-xxx");
+    expect(res.calls).to.be.an("array");
+    expect(res.calls).to.have.lengthOf(1);
+    expect(res.calls[0].status).to.eq(0);
+    expect(res.calls[0].receiver).to.eq("60123456789");
+    expect(res.calls[0]["session-uuid"]).to.eq("xxx-xxx-xxx-xxx");
+    expect(res.calls[0]["call-uuid"]).to.eq("xxx-xxx-xxx-xxx");
   };
 
   beforeEach(() => {
@@ -46,7 +49,7 @@ describe("Voice Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "get");
+    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
 
     const voiceCall = () => {
       this.voice.call();
