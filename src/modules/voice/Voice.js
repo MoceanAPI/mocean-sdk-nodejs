@@ -9,7 +9,6 @@ class Voice extends AbstractMocean {
   requiredField() {
     if (this.isHangup) {
       return super.requiredField();
-      L;
     }
 
     return [...super.requiredField(), ...["mocean-to"]];
@@ -54,7 +53,11 @@ class Voice extends AbstractMocean {
     this.isHangup = true;
     this.createAndValidate({});
 
-    return this.transmitter.post(`/voice/hangup/${callUuid}`, this.params, callback);
+    return this.transmitter.post(
+      `/voice/hangup/${callUuid}`,
+      this.params,
+      callback
+    );
   }
 }
 
