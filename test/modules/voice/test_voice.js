@@ -102,4 +102,16 @@ describe("Voice Test", () => {
       testObj(res);
     });
   });
+
+  it("should proceed on hangup", () => {
+    TestingUtils.makeMockRequest(
+      "hangup.json",
+      "/voice/hangup/xxx-xxx-xxx-xxx",
+      "post"
+    );
+
+    return this.voice.hangup("xxx-xxx-xxx-xxx").then(res => {
+      expect(res.status).to.eq(0);
+    });
+  });
 });

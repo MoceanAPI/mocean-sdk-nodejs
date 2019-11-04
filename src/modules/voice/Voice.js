@@ -1,7 +1,17 @@
 const AbstractMocean = require("../AbstractMocean");
 
 class Voice extends AbstractMocean {
+  constructor(objAuth, options) {
+    super(objAuth, options);
+    this.isHangup = false;
+  }
+
   requiredField() {
+    if (this.isHangup) {
+      return super.requiredField();
+      L;
+    }
+
     return [...super.requiredField(), ...["mocean-to"]];
   }
 
@@ -38,6 +48,13 @@ class Voice extends AbstractMocean {
     }
 
     return this.transmitter.post("/voice/dial", this.params, callback);
+  }
+
+  hangup(callUuid, callback = null) {
+    this.isHangup = true;
+    this.createAndValidate({});
+
+    return this.transmitter.post(`/voice/hangup/${callUuid}`, this.params, callback);
   }
 }
 
