@@ -1,4 +1,4 @@
-class AbstractMccc {
+class AbstractMc {
   constructor(params = null) {
     this.requestData = {};
 
@@ -27,4 +27,4 @@ class AbstractMccc {
   }
 }
 
-module.exports = AbstractMccc;
+module.exports = AbstractMc;

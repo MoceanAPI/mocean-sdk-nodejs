@@ -1,10 +1,10 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { Sleep } = require("../../../../src/modules/voice/Mccc/index");
+const { Sleep } = require("../../../../src/modules/voice/Mc/index");
 
 describe("Sleep Test", () => {
-  it("should return mccc object", () => {
+  it("should return mc object", () => {
     const params = {
       duration: 10000,
       action: "sleep"

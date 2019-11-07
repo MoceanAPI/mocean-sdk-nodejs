@@ -19,13 +19,13 @@ class Voice extends AbstractMocean {
     return this;
   }
 
-  setCallEventUrl(param) {
-    this.params["mocean-call-event-url"] = param;
+  setEventUrl(param) {
+    this.params["mocean-event-url"] = param;
     return this;
   }
 
-  setCallControlCommands(param) {
-    this.params["mocean-call-control-commands"] = param;
+  setMoceanCommand(param) {
+    this.params["mocean-command"] = param;
     return this;
   }
 
@@ -33,16 +33,14 @@ class Voice extends AbstractMocean {
     this.createAndValidate(params);
 
     if (
-      this.params["mocean-call-control-commands"] &&
-      typeof this.params["mocean-call-control-commands"].build === "function"
+      this.params["mocean-command"] &&
+      typeof this.params["mocean-command"].build === "function"
     ) {
-      this.params["mocean-call-control-commands"] = this.params[
-        "mocean-call-control-commands"
-      ].build();
+      this.params["mocean-command"] = this.params["mocean-command"].build();
     }
-    if (this.params["mocean-call-control-commands"]) {
-      this.params["mocean-call-control-commands"] = JSON.stringify(
-        this.params["mocean-call-control-commands"]
+    if (this.params["mocean-command"]) {
+      this.params["mocean-command"] = JSON.stringify(
+        this.params["mocean-command"]
       );
     }
 

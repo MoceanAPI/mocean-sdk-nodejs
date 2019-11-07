@@ -1,10 +1,10 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { Dial } = require("../../../../src/modules/voice/Mccc/index");
+const { Dial } = require("../../../../src/modules/voice/Mc/index");
 
 describe("Dial Test", () => {
-  it("should return mccc object", () => {
+  it("should return mc object", () => {
     const params = {
       to: "testing to",
       action: "dial",

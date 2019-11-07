@@ -1,10 +1,10 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { Say } = require("../../../../src/modules/voice/Mccc/index");
+const { Say } = require("../../../../src/modules/voice/Mc/index");
 
 describe("Say Test", () => {
-  it("should return mccc object", () => {
+  it("should return mc object", () => {
     const params = {
       language: "testing language",
       text: "testing text",

@@ -1,7 +1,7 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { Record } = require("../../../../src/modules/voice/Mccc/index");
+const { Record } = require("../../../../src/modules/voice/Mc/index");
 
 describe("Record Test", () => {
   it("should auto define action", () => {

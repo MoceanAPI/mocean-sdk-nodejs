@@ -1,6 +1,6 @@
-const { Say, Dial, Collect, Play, Sleep, Record } = require("./Mccc/index");
+const { Say, Dial, Collect, Play, Sleep, Record } = require("./Mc/index");
 
-class Mccc {
+class Mc {
   static say(text = null) {
     const ins = new Say();
 
@@ -56,4 +56,4 @@ class Mccc {
   }
 }
 
-module.exports = Mccc;
+module.exports = Mc;

@@ -1,6 +1,6 @@
-const AbstractMccc = require("./AbstractMccc");
+const AbstractMc = require("./AbstractMc");
 
-class Sleep extends AbstractMccc {
+class Sleep extends AbstractMc {
   setDuration(param) {
     this.requestData.duration = param;
     return this;

@@ -1,6 +1,6 @@
-const AbstractMccc = require("./AbstractMccc");
+const AbstractMc = require("./AbstractMc");
 
-class Play extends AbstractMccc {
+class Play extends AbstractMc {
   setFiles(param) {
     this.requestData.file = param;
     return this;

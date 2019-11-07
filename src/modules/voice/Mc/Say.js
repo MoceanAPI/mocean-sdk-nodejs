@@ -1,6 +1,6 @@
-const AbstractMccc = require("./AbstractMccc");
+const AbstractMc = require("./AbstractMc");
 
-class Say extends AbstractMccc {
+class Say extends AbstractMc {
   constructor(params = null) {
     super(params);
 

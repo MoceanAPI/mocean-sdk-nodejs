@@ -1,13 +1,13 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { McccBuilder, Mccc } = require("../../../src/index");
+const { McBuilder, Mc } = require("../../../src/index");
 
-describe("McccBuilder Test", () => {
-  it("should able to add multiple mccc object", () => {
-    const play = Mccc.play("testing file");
+describe("McBuilder Test", () => {
+  it("should able to add multiple mc object", () => {
+    const play = Mc.play("testing file");
 
-    const builder = new McccBuilder();
+    const builder = new McBuilder();
     builder.add(play);
     expect(builder.build()).to.have.lengthOf(1);
     expect(builder.build()[0]).to.eq(play.get());
@@ -18,9 +18,9 @@ describe("McccBuilder Test", () => {
     expect(builder.build()[1]).to.eq(play.get());
   });
 
-  it("should throw if add non mccc object", () => {
+  it("should throw if add non mc object", () => {
     expect(() => {
-      new McccBuilder().add("test");
+      new McBuilder().add("test");
     }).to.throw();
   });
 });

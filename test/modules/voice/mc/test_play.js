@@ -1,10 +1,10 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { Play } = require("../../../../src/modules/voice/Mccc/index");
+const { Play } = require("../../../../src/modules/voice/Mc/index");
 
 describe("Play Test", () => {
-  it("should return mccc object", () => {
+  it("should return mc object", () => {
     const params = {
       file: "testing file",
       "barge-in": true,

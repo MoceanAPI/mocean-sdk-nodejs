@@ -1,6 +1,6 @@
-const AbstractMccc = require("./AbstractMccc");
+const AbstractMc = require("./AbstractMc");
 
-class Dial extends AbstractMccc {
+class Dial extends AbstractMc {
   setTo(param) {
     this.requestData.to = param;
     return this;

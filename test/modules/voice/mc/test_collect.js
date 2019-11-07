@@ -1,10 +1,10 @@
 const chai = require("chai");
 
 const { expect } = chai;
-const { Collect } = require("../../../../src/modules/voice/Mccc/index");
+const { Collect } = require("../../../../src/modules/voice/Mc/index");
 
 describe("Collect Test", () => {
-  it("should return mccc object", () => {
+  it("should return mc object", () => {
     const params = {
       "event-url": "testing event url",
       min: 1,

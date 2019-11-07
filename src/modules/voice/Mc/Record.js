@@ -1,6 +1,6 @@
-const AbstractMccc = require("./AbstractMccc");
+const AbstractMc = require("./AbstractMc");
 
-class Record extends AbstractMccc {
+class Record extends AbstractMc {
   requiredKey() {
     return [];
   }

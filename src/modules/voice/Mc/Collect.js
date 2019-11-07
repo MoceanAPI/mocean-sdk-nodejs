@@ -1,6 +1,6 @@
-const AbstractMccc = require("./AbstractMccc");
+const AbstractMc = require("./AbstractMc");
 
-class Collect extends AbstractMccc {
+class Collect extends AbstractMc {
   setEventUrl(param) {
     this.requestData["event-url"] = param;
     return this;

@@ -5,7 +5,7 @@ const sinonChai = require("sinon-chai");
 const { expect } = chai;
 chai.use(sinonChai);
 const TestingUtils = require("../../testing_utils");
-const { Client, Mocean, Mccc, McccBuilder } = require("../../../src/index");
+const { Client, Mocean, Mc, McBuilder } = require("../../../src/index");
 
 describe("Voice Test", () => {
   const testObj = res => {
@@ -31,21 +31,15 @@ describe("Voice Test", () => {
     expect(this.voice.params).to.has.property("mocean-to");
     expect(this.voice.params["mocean-to"]).to.eq("test to");
 
-    expect(this.voice.params).to.not.has.property("mocean-call-event-url");
-    this.voice.setCallEventUrl("test call event url");
-    expect(this.voice.params).to.has.property("mocean-call-event-url");
-    expect(this.voice.params["mocean-call-event-url"]).to.eq(
-      "test call event url"
-    );
+    expect(this.voice.params).to.not.has.property("mocean-event-url");
+    this.voice.setEventUrl("test event url");
+    expect(this.voice.params).to.has.property("mocean-event-url");
+    expect(this.voice.params["mocean-event-url"]).to.eq("test event url");
 
-    expect(this.voice.params).to.not.has.property(
-      "mocean-call-control-commands"
-    );
-    this.voice.setCallControlCommands("test call control commands");
-    expect(this.voice.params).to.has.property("mocean-call-control-commands");
-    expect(this.voice.params["mocean-call-control-commands"]).to.eq(
-      "test call control commands"
-    );
+    expect(this.voice.params).to.not.has.property("mocean-command");
+    this.voice.setMoceanCommand("test mocean command");
+    expect(this.voice.params).to.has.property("mocean-command");
+    expect(this.voice.params["mocean-command"]).to.eq("test mocean command");
   });
 
   it("should throw error when required field not set", () => {
@@ -63,14 +57,14 @@ describe("Voice Test", () => {
     expect(voiceCall()).to.be.true;
   });
 
-  it("should accept mcccBuilder as mccc parameter", () => {
+  it("should accept mcBuilder as mc parameter", () => {
     TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
 
-    const mcccBuilder = new McccBuilder().add(Mccc.play("hello world"));
+    const mcBuilder = new McBuilder().add(Mc.play("hello world"));
 
     return this.voice
       .setTo("test to")
-      .setCallControlCommands(mcccBuilder)
+      .setMoceanCommand(mcBuilder)
       .call()
       .then(result => {
         expect(result).to.not.eq(null);
