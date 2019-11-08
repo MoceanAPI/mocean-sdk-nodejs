@@ -65,9 +65,9 @@ class Voice extends AbstractMocean {
 
     return this.transmitter
       .get("/voice/rec", this.params, null)
-      .then(recordingStream => {
+      .then(recordingBuffer => {
         const res = {
-          recordingStream,
+          recordingBuffer,
           filename: `${callUuid}.mp3`
         };
 
