@@ -4,10 +4,11 @@ class Voice extends AbstractMocean {
   constructor(objAuth, options) {
     super(objAuth, options);
     this.isHangup = false;
+    this.isRecording = false;
   }
 
   requiredField() {
-    if (this.isHangup) {
+    if (this.isHangup || this.isRecording) {
       return super.requiredField();
     }
 
@@ -56,6 +57,33 @@ class Voice extends AbstractMocean {
       this.params,
       callback
     );
+  }
+
+  recording(callUuid, callback = null) {
+    this.isRecording = true;
+    this.createAndValidate({ "mocean-call-uuid": callUuid });
+
+    return this.transmitter
+      .get("/voice/rec", this.params, null)
+      .then(recordingStream => {
+        const res = {
+          recordingStream,
+          filename: `${callUuid}.mp3`
+        };
+
+        if (callback !== null) {
+          return callback(null, res);
+        }
+
+        return res;
+      })
+      .catch(err => {
+        if (callback !== null) {
+          return callback(err, null);
+        }
+
+        return err;
+      });
   }
 }
 
