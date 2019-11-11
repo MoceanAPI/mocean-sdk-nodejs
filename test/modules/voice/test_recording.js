@@ -37,6 +37,28 @@ describe("Recording Test", () => {
     });
   });
 
+  it("should throw error", () => {
+    TestingUtils.makeMockRequest(
+      "error_response.json",
+      "/voice/rec",
+      "get",
+      400,
+      true
+    );
+
+    return new Promise((resolve, reject) => {
+      const fake = sinon.fake((err, res) => {
+        if (res) {
+          return reject(new Error("expect to be error but response received"));
+        }
+
+        expect(fake).has.been.called;
+        return resolve();
+      });
+      this.voice.recording("xxx-xxx-xxx-xxx", fake);
+    });
+  });
+
   it("should return promise on call", () => {
     TestingUtils.makeMockRequest("recording.json", "/voice/rec", "get");
 
