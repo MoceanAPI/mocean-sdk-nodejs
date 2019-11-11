@@ -83,4 +83,18 @@ describe("Recording Test", () => {
       testObj(res);
     });
   });
+
+  it("should return undecoded body when content type is audio/mpeg", () => {
+    const nockIns = TestingUtils.makeMockRequest(
+      "recording.json",
+      "/voice/rec",
+      "get"
+    );
+
+    nockIns.reply(200, "mock binary", { "Content-Type": "audio/mpeg" });
+
+    return this.voice.recording("xxx-xxx-xxx-xxx").then(res => {
+      expect(res).not.equal(null);
+    });
+  });
 });

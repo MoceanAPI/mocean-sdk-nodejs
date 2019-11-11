@@ -22,5 +22,7 @@ module.exports = {
     } else {
       nockIns.replyWithError(errorMsg);
     }
+
+    return nockIns;
   }
 };
