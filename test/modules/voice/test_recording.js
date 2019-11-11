@@ -37,7 +37,7 @@ describe("Recording Test", () => {
     });
   });
 
-  it("should throw error", () => {
+  it("should throw error callback", () => {
     TestingUtils.makeMockRequest(
       "error_response.json",
       "/voice/rec",
@@ -57,6 +57,23 @@ describe("Recording Test", () => {
       });
       this.voice.recording("xxx-xxx-xxx-xxx", fake);
     });
+  });
+
+  it("should throw error promise", () => {
+    TestingUtils.makeMockRequest(
+      "error_response.json",
+      "/voice/rec",
+      "get",
+      400,
+      true
+    );
+
+    return this.voice
+      .recording("xxx-xxx-xxx-xxx")
+      .then(() =>
+        Promise.reject(new Error("expect to be error but response received"))
+      )
+      .catch(() => Promise.resolve());
   });
 
   it("should return promise on call", () => {
