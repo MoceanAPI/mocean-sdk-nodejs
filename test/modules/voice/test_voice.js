@@ -43,7 +43,14 @@ describe("Voice Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
+    TestingUtils.makeMockRequest("/voice/dial", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to"
+        });
+        return TestingUtils.fileResponse("voice.json");
+      }
+    );
 
     const voiceCall = () => {
       this.voice.call();
@@ -58,7 +65,17 @@ describe("Voice Test", () => {
   });
 
   it("should accept mcBuilder as mc parameter", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
+    TestingUtils.makeMockRequest("/voice/dial", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to",
+          "mocean-command": JSON.stringify(
+            new McBuilder().add(Mc.play("hello world")).build()
+          )
+        });
+        return TestingUtils.fileResponse("voice.json");
+      }
+    );
 
     const mcBuilder = new McBuilder().add(Mc.play("hello world"));
 
@@ -72,7 +89,14 @@ describe("Voice Test", () => {
   });
 
   it("should return callback on call", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
+    TestingUtils.makeMockRequest("/voice/dial", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to"
+        });
+        return TestingUtils.fileResponse("voice.json");
+      }
+    );
 
     this.voice.setTo("test to");
     return new Promise((resolve, reject) => {
@@ -89,7 +113,14 @@ describe("Voice Test", () => {
   });
 
   it("should return promise on call", () => {
-    TestingUtils.makeMockRequest("voice.json", "/voice/dial", "post");
+    TestingUtils.makeMockRequest("/voice/dial", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to"
+        });
+        return TestingUtils.fileResponse("voice.json");
+      }
+    );
 
     this.voice.setTo("test to");
     return this.voice.call().then(res => {
@@ -98,7 +129,16 @@ describe("Voice Test", () => {
   });
 
   it("should be able to call hangup", () => {
-    TestingUtils.makeMockRequest("hangup.json", "/voice/hangup", "post");
+    TestingUtils.makeMockRequest("/voice/hangup", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-call-uuid": "xxx-xxx-xxx-xxx"
+        });
+        return TestingUtils.fileResponse("hangup.json");
+      }
+    );
+
+    // TestingUtils.makeMockRequest("hangup.json", "/voice/hangup", "post");
 
     return this.voice.hangup("xxx-xxx-xxx-xxx").then(res => {
       expect(res.status).to.eq(0);

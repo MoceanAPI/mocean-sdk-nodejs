@@ -47,7 +47,12 @@ describe("Number Lookup Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("number_lookup.json", "/nl", "post");
+    TestingUtils.makeMockRequest("/nl", "POST").reply((uri, requestBody) => {
+      TestingUtils.verifyParamsWith(requestBody, {
+        "mocean-to": "test to"
+      });
+      return TestingUtils.fileResponse("number_lookup.json");
+    });
 
     const inquiryCall = () => {
       this.numberLookup.inquiry();
@@ -62,7 +67,12 @@ describe("Number Lookup Test", () => {
   });
 
   it("should return callback on inquiry", () => {
-    TestingUtils.makeMockRequest("number_lookup.json", "/nl", "post");
+    TestingUtils.makeMockRequest("/nl", "POST").reply((uri, requestBody) => {
+      TestingUtils.verifyParamsWith(requestBody, {
+        "mocean-to": "test to"
+      });
+      return TestingUtils.fileResponse("number_lookup.json");
+    });
 
     this.numberLookup.setTo("test to");
     return new Promise((resolve, reject) => {
@@ -79,7 +89,12 @@ describe("Number Lookup Test", () => {
   });
 
   it("should return promise on inquiry", () => {
-    TestingUtils.makeMockRequest("number_lookup.json", "/nl", "post");
+    TestingUtils.makeMockRequest("/nl", "POST").reply((uri, requestBody) => {
+      TestingUtils.verifyParamsWith(requestBody, {
+        "mocean-to": "test to"
+      });
+      return TestingUtils.fileResponse("number_lookup.json");
+    });
 
     this.numberLookup.setTo("test to");
     return this.numberLookup.inquiry().then(res => {

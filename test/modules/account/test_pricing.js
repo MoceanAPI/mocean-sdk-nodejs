@@ -45,7 +45,9 @@ describe("Pricing Test", () => {
   });
 
   it("should return callback on inquiry", () => {
-    TestingUtils.makeMockRequest("price.json", "/account/pricing");
+    TestingUtils.makeMockRequest("/account/pricing", "GET").reply(() => {
+      return TestingUtils.fileResponse("price.json");
+    });
 
     return new Promise((resolve, reject) => {
       const fake = sinon.fake((err, res) => {
@@ -61,7 +63,9 @@ describe("Pricing Test", () => {
   });
 
   it("should return promise on inquiry", () => {
-    TestingUtils.makeMockRequest("price.json", "/account/pricing");
+    TestingUtils.makeMockRequest("/account/pricing", "GET").reply(() => {
+      return TestingUtils.fileResponse("price.json");
+    });
 
     return this.pricing.inquiry().then(res => {
       testObj(res);

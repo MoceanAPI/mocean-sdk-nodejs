@@ -13,7 +13,9 @@ describe("Transmitter test", () => {
   });
 
   it("should return err callback if status not equal 0 on send", done => {
-    TestingUtils.makeMockRequest("error_response.json", "/test", "get", 400);
+    TestingUtils.makeMockRequest("/test", "GET").reply(400, () => {
+      return TestingUtils.fileResponse("error_response.json");
+    });
 
     const fake = sinon.fake(err => {
       try {
@@ -29,12 +31,8 @@ describe("Transmitter test", () => {
   });
 
   it("should return err callback on send", done => {
-    TestingUtils.makeMockRequest(
-      "error_response.json",
-      "/test",
-      "get",
-      400,
-      true
+    TestingUtils.makeMockRequest("/test", "GET").replyWithError(
+      "unknown error"
     );
 
     const fake = sinon.fake(err => {
@@ -51,7 +49,9 @@ describe("Transmitter test", () => {
   });
 
   it("should throw if unable to parse response", done => {
-    TestingUtils.makeMockRequest("error_response.xml", "/test", "get", 400);
+    TestingUtils.makeMockRequest("/test", "GET").reply(400, () => {
+      return TestingUtils.fileResponse("error_response.xml");
+    });
 
     const fake = sinon.fake(err => {
       try {

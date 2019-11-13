@@ -69,7 +69,15 @@ describe("Verify Request Test", () => {
   });
 
   it("should send as sms channel", () => {
-    TestingUtils.makeMockRequest("send_code.json", "/verify/req/sms", "post");
+    TestingUtils.makeMockRequest("/verify/req/sms", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to",
+          "mocean-brand": "test brand"
+        });
+        return TestingUtils.fileResponse("send_code.json");
+      }
+    );
 
     this.verifyRequest.sendAs("sms");
     expect(this.verifyRequest.channel).to.equal("sms");
@@ -80,10 +88,13 @@ describe("Verify Request Test", () => {
   });
 
   it("should resend verify request when requested", () => {
-    TestingUtils.makeMockRequest(
-      "resend_code.json",
-      "/verify/resend/sms",
-      "post"
+    TestingUtils.makeMockRequest("/verify/resend/sms", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-reqid": "test req id"
+        });
+        return TestingUtils.fileResponse("resend_code.json");
+      }
     );
 
     this.verifyRequest = this.mocean.verifyRequest(true);
@@ -93,7 +104,15 @@ describe("Verify Request Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("send_code.json", "/verify/req", "post");
+    TestingUtils.makeMockRequest("/verify/req", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to",
+          "mocean-brand": "test brand"
+        });
+        return TestingUtils.fileResponse("send_code.json");
+      }
+    );
 
     const sendCall = () => {
       this.verifyRequest.send();
@@ -112,7 +131,15 @@ describe("Verify Request Test", () => {
   });
 
   it("should return callback on send", () => {
-    TestingUtils.makeMockRequest("send_code.json", "/verify/req", "post");
+    TestingUtils.makeMockRequest("/verify/req", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to",
+          "mocean-brand": "test brand"
+        });
+        return TestingUtils.fileResponse("send_code.json");
+      }
+    );
 
     this.verifyRequest.setTo("test to");
     this.verifyRequest.setBrand("test brand");
@@ -130,7 +157,15 @@ describe("Verify Request Test", () => {
   });
 
   it("should return promise on send", () => {
-    TestingUtils.makeMockRequest("send_code.json", "/verify/req", "post");
+    TestingUtils.makeMockRequest("/verify/req", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-to": "test to",
+          "mocean-brand": "test brand"
+        });
+        return TestingUtils.fileResponse("send_code.json");
+      }
+    );
 
     this.verifyRequest.setTo("test to");
     this.verifyRequest.setBrand("test brand");

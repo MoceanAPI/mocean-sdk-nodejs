@@ -22,7 +22,12 @@ describe("Recording Test", () => {
   });
 
   it("should return callback on call", () => {
-    TestingUtils.makeMockRequest("recording.json", "/voice/rec", "get");
+    TestingUtils.makeMockRequest("/voice/rec", "GET").reply(uri => {
+      TestingUtils.verifyParamsWith(uri.split("?")[1], {
+        "mocean-call-uuid": "xxx-xxx-xxx-xxx"
+      });
+      return TestingUtils.fileResponse("recording.json");
+    });
 
     return new Promise((resolve, reject) => {
       const fake = sinon.fake((err, res) => {
@@ -38,12 +43,8 @@ describe("Recording Test", () => {
   });
 
   it("should throw error callback", () => {
-    TestingUtils.makeMockRequest(
-      "error_response.json",
-      "/voice/rec",
-      "get",
-      400,
-      true
+    TestingUtils.makeMockRequest("/voice/rec", "GET").replyWithError(
+      "unknown error"
     );
 
     return new Promise((resolve, reject) => {
@@ -60,12 +61,8 @@ describe("Recording Test", () => {
   });
 
   it("should throw error promise", () => {
-    TestingUtils.makeMockRequest(
-      "error_response.json",
-      "/voice/rec",
-      "get",
-      400,
-      true
+    TestingUtils.makeMockRequest("/voice/rec", "GET").replyWithError(
+      "unknown error"
     );
 
     return this.voice
@@ -77,7 +74,12 @@ describe("Recording Test", () => {
   });
 
   it("should return promise on call", () => {
-    TestingUtils.makeMockRequest("recording.json", "/voice/rec", "get");
+    TestingUtils.makeMockRequest("/voice/rec", "GET").reply(uri => {
+      TestingUtils.verifyParamsWith(uri.split("?")[1], {
+        "mocean-call-uuid": "xxx-xxx-xxx-xxx"
+      });
+      return TestingUtils.fileResponse("recording.json");
+    });
 
     return this.voice.recording("xxx-xxx-xxx-xxx").then(res => {
       testObj(res);
@@ -85,13 +87,12 @@ describe("Recording Test", () => {
   });
 
   it("should return undecoded body when content type is audio/mpeg", () => {
-    const nockIns = TestingUtils.makeMockRequest(
-      "recording.json",
-      "/voice/rec",
-      "get"
-    );
-
-    nockIns.reply(200, "mock binary", { "Content-Type": "audio/mpeg" });
+    TestingUtils.makeMockRequest("/voice/rec", "GET").reply(uri => {
+      TestingUtils.verifyParamsWith(uri.split("?")[1], {
+        "mocean-call-uuid": "xxx-xxx-xxx-xxx"
+      });
+      return [200, "mock binary", { "Content-Type": "audio/mpeg" }];
+    });
 
     return this.voice.recording("xxx-xxx-xxx-xxx").then(res => {
       expect(res).not.equal(null);

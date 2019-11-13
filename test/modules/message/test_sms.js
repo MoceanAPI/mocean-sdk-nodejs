@@ -90,7 +90,14 @@ describe("SMS Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("message.json", "/sms", "post");
+    TestingUtils.makeMockRequest("/sms", "POST").reply((uri, requestBody) => {
+      TestingUtils.verifyParamsWith(requestBody, {
+        "mocean-text": "test text",
+        "mocean-from": "test from",
+        "mocean-to": "test to"
+      });
+      return TestingUtils.fileResponse("message.json");
+    });
 
     const sendCall = () => {
       this.sms.send();
@@ -113,7 +120,14 @@ describe("SMS Test", () => {
   });
 
   it("should return callback on send", () => {
-    TestingUtils.makeMockRequest("message.json", "/sms", "post");
+    TestingUtils.makeMockRequest("/sms", "POST").reply((uri, requestBody) => {
+      TestingUtils.verifyParamsWith(requestBody, {
+        "mocean-text": "test text",
+        "mocean-from": "test from",
+        "mocean-to": "test to"
+      });
+      return TestingUtils.fileResponse("message.json");
+    });
 
     this.sms.setText("test text");
     this.sms.setFrom("test from");
@@ -132,7 +146,14 @@ describe("SMS Test", () => {
   });
 
   it("should return promise on send", () => {
-    TestingUtils.makeMockRequest("message.json", "/sms", "post");
+    TestingUtils.makeMockRequest("/sms", "POST").reply((uri, requestBody) => {
+      TestingUtils.verifyParamsWith(requestBody, {
+        "mocean-text": "test text",
+        "mocean-from": "test from",
+        "mocean-to": "test to"
+      });
+      return TestingUtils.fileResponse("message.json");
+    });
 
     this.sms.setText("test text");
     this.sms.setFrom("test from");
