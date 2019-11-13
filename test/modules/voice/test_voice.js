@@ -97,12 +97,8 @@ describe("Voice Test", () => {
     });
   });
 
-  it("should proceed on hangup", () => {
-    TestingUtils.makeMockRequest(
-      "hangup.json",
-      "/voice/hangup/xxx-xxx-xxx-xxx",
-      "post"
-    );
+  it("should be able to call hangup", () => {
+    TestingUtils.makeMockRequest("hangup.json", "/voice/hangup", "post");
 
     return this.voice.hangup("xxx-xxx-xxx-xxx").then(res => {
       expect(res.status).to.eq(0);

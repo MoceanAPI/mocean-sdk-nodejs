@@ -50,13 +50,9 @@ class Voice extends AbstractMocean {
 
   hangup(callUuid, callback = null) {
     this.isHangup = true;
-    this.createAndValidate({});
+    this.createAndValidate({ "mocean-call-uuid": callUuid });
 
-    return this.transmitter.post(
-      `/voice/hangup/${callUuid}`,
-      this.params,
-      callback
-    );
+    return this.transmitter.post("/voice/hangup", this.params, callback);
   }
 
   recording(callUuid, callback = null) {
