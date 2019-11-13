@@ -1,7 +1,10 @@
+const { URLSearchParams } = require("url");
 const nock = require("nock");
 const fs = require("fs");
 const chai = require("chai");
 const sinonChai = require("sinon-chai");
+
+global.URLSearchParams = URLSearchParams;
 
 const { expect } = chai;
 chai.use(sinonChai);

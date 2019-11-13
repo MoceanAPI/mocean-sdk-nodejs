@@ -91,7 +91,7 @@ describe("Recording Test", () => {
       TestingUtils.verifyParamsWith(uri.split("?")[1], {
         "mocean-call-uuid": "xxx-xxx-xxx-xxx"
       });
-      return [200, "mock binary", { "Content-Type": "audio/mpeg" }];
+      return [200, "mock binary", { "content-type": "audio/mpeg" }];
     });
 
     return this.voice.recording("xxx-xxx-xxx-xxx").then(res => {
