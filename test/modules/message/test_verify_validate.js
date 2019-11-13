@@ -34,7 +34,15 @@ describe("Verify Validate Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("verify_code.json", "/verify/check", "post");
+    TestingUtils.makeMockRequest("/verify/check", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-reqid": "test req id",
+          "mocean-code": "test code"
+        });
+        return TestingUtils.fileResponse("verify_code.json");
+      }
+    );
 
     const sendCall = () => {
       this.verifyValidate.send();
@@ -53,7 +61,15 @@ describe("Verify Validate Test", () => {
   });
 
   it("should return callback on send", () => {
-    TestingUtils.makeMockRequest("verify_code.json", "/verify/check", "post");
+    TestingUtils.makeMockRequest("/verify/check", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-reqid": "test req id",
+          "mocean-code": "test code"
+        });
+        return TestingUtils.fileResponse("verify_code.json");
+      }
+    );
 
     this.verifyValidate.setReqid("test req id");
     this.verifyValidate.setCode("test code");
@@ -71,7 +87,15 @@ describe("Verify Validate Test", () => {
   });
 
   it("should return promise on send", () => {
-    TestingUtils.makeMockRequest("verify_code.json", "/verify/check", "post");
+    TestingUtils.makeMockRequest("/verify/check", "POST").reply(
+      (uri, requestBody) => {
+        TestingUtils.verifyParamsWith(requestBody, {
+          "mocean-reqid": "test req id",
+          "mocean-code": "test code"
+        });
+        return TestingUtils.fileResponse("verify_code.json");
+      }
+    );
 
     this.verifyValidate.setReqid("test req id");
     this.verifyValidate.setCode("test code");

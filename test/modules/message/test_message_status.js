@@ -31,7 +31,12 @@ describe("Message Status Test", () => {
   });
 
   it("should throw error when required field not set", () => {
-    TestingUtils.makeMockRequest("message_status.json", "/report/message");
+    TestingUtils.makeMockRequest("/report/message", "GET").reply(uri => {
+      TestingUtils.verifyParamsWith(uri.split("?")[1], {
+        "mocean-msgid": "test msgid"
+      });
+      return TestingUtils.fileResponse("message_status.json");
+    });
 
     const inquiryCall = () => {
       this.messageStatus.inquiry();
@@ -46,9 +51,14 @@ describe("Message Status Test", () => {
   });
 
   it("should return callback on inquiry", () => {
-    TestingUtils.makeMockRequest("message_status.json", "/report/message");
+    TestingUtils.makeMockRequest("/report/message", "GET").reply(uri => {
+      TestingUtils.verifyParamsWith(uri.split("?")[1], {
+        "mocean-msgid": "test msgid"
+      });
+      return TestingUtils.fileResponse("message_status.json");
+    });
 
-    this.messageStatus.setMsgid("test msg id");
+    this.messageStatus.setMsgid("test msgid");
     return new Promise((resolve, reject) => {
       const fake = sinon.fake((err, res) => {
         if (err) {
@@ -63,9 +73,14 @@ describe("Message Status Test", () => {
   });
 
   it("should return promise on inquiry", () => {
-    TestingUtils.makeMockRequest("message_status.json", "/report/message");
+    TestingUtils.makeMockRequest("/report/message", "GET").reply(uri => {
+      TestingUtils.verifyParamsWith(uri.split("?")[1], {
+        "mocean-msgid": "test msgid"
+      });
+      return TestingUtils.fileResponse("message_status.json");
+    });
 
-    this.messageStatus.setMsgid("test msg id");
+    this.messageStatus.setMsgid("test msgid");
     return this.messageStatus.inquiry().then(res => {
       testObj(res);
     });

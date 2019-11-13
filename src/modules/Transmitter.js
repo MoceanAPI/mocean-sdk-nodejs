@@ -35,7 +35,8 @@ class Transmitter {
       uri,
       method,
       qs: method === "get" ? clonedParams : {},
-      form: method === "post" ? clonedParams : {}
+      form: method === "post" ? clonedParams : {},
+      encoding: null
     });
 
     if (callback === null) {
@@ -58,6 +59,10 @@ class Transmitter {
       request(httpOptions, (err, res, body) => {
         if (err) {
           return reject(err);
+        }
+
+        if (res.headers["content-type"] === "audio/mpeg") {
+          return resolve(body);
         }
 
         try {

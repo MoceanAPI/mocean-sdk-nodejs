@@ -22,7 +22,9 @@ describe("Balance Test", () => {
   });
 
   it("should return callback on inquiry", () => {
-    TestingUtils.makeMockRequest("balance.json", "/account/balance");
+    TestingUtils.makeMockRequest("/account/balance", "GET").reply(() => {
+      return TestingUtils.fileResponse("balance.json");
+    });
 
     return new Promise((resolve, reject) => {
       const fake = sinon.fake((err, res) => {
@@ -38,7 +40,9 @@ describe("Balance Test", () => {
   });
 
   it("should return promise on inquiry", () => {
-    TestingUtils.makeMockRequest("balance.json", "/account/balance");
+    TestingUtils.makeMockRequest("/account/balance", "GET").reply(() => {
+      return TestingUtils.fileResponse("balance.json");
+    });
 
     return this.balance.inquiry().then(res => {
       testObj(res);
