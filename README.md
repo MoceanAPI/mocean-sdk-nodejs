@@ -84,7 +84,7 @@ License
 
 This library is released under the [MIT License][license]
 
-[signup]: https://dashboard.moceanapi.com/register?medium=github&campaign=sdk-javascript
+[signup]: https://dashboard.moceanapi.com/register?medium=github&campaign=nodejs-sdk
 [doc_main]: https://moceanapi.com/docs/?javascript
 [doc_sms]: https://moceanapi.com/docs/?javascript#send-sms
 [license]: LICENSE.txt
