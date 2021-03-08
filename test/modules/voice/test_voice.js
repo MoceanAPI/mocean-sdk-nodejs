@@ -13,8 +13,8 @@ describe("Voice Test", () => {
     expect(res.calls).to.have.lengthOf(1);
     expect(res.calls[0].status).to.eq(0);
     expect(res.calls[0].receiver).to.eq("60123456789");
-    expect(res.calls[0]["session-uuid"]).to.eq("xxx-xxx-xxx-xxx");
-    expect(res.calls[0]["call-uuid"]).to.eq("xxx-xxx-xxx-xxx");
+    expect(res.calls[0]["session_uuid"]).to.eq("xxx-xxx-xxx-xxx");
+    expect(res.calls[0]["call_uuid"]).to.eq("xxx-xxx-xxx-xxx");
   };
 
   beforeEach(() => {

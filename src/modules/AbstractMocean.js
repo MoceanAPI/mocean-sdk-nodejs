@@ -17,6 +17,7 @@ class AbstractMocean {
 
   create(params) {
     this.params = Object.assign({}, this.params, params);
+    return this;
   }
 
   createFinalParams() {

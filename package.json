@@ -1,6 +1,6 @@
 {
   "name": "mocean-sdk",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "This is a Mocean SDK written in Node.js, to use it you will need a mocean account. Signup for free at https://moceanapi.com",
   "main": "src/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "mocean, sms, verify"
   ],
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 8.0.0"
   },
   "author": "Micro Ocean Technologies Sdn Bhd",
   "license": "MIT",

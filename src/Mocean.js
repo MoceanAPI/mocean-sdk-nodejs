@@ -61,6 +61,11 @@ class Mocean {
     const Voice = require("./modules/voice/Voice");
     return new Voice(this.obj_auth, this.options);
   }
+
+  command() {
+    const Command = require("./modules/command/Command");
+    return new Command(this.obj_auth, this.options);
+  }
 }
 
 module.exports = Mocean;
