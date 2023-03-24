@@ -5,15 +5,15 @@ on:
     types: [created]
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install dependencies
-      run: npm install
-    - name: Publish package
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-      run: |
-        npm publish --access public
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: yarn install
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
