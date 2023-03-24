@@ -23,8 +23,10 @@ class Transmitter {
   send(method, uri, params, callback = null) {
     const clonedParams = Object.assign({}, params);
     if (clonedParams["mocean-medium"] !== "NODECLI-SDK") {
-      // set as nodejs sdk if not nodecli
-      clonedParams["mocean-medium"] = "NODEJS-SDK";
+      // set as nodejs sdk if not nodecli and no value was passed
+      clonedParams["mocean-medium"] = clonedParams["mocean-medium"]
+        ? clonedParams["mocean-medium"]
+        : "NODEJS-SDK";
     }
 
     // use json
