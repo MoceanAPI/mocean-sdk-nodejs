@@ -1,6 +1,6 @@
 {
   "name": "mocean-sdk",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "This is a Mocean SDK written in Node.js, to use it you will need a mocean account. Signup for free at https://moceanapi.com",
   "main": "src/index.js",
   "scripts": {
