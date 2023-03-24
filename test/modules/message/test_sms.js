@@ -85,6 +85,11 @@ describe("SMS Test", () => {
     expect(this.sms.params).to.has.property("mocean-validity");
     expect(this.sms.params["mocean-validity"]).to.eq("test validity");
 
+    expect(this.sms.params).to.not.has.property("mocean-medium");
+    this.sms.setMedium("test_medium");
+    expect(this.sms.params).to.has.property("mocean-medium");
+    expect(this.sms.params["mocean-medium"]).to.eq("test_medium");
+
     this.sms.addTo("test to3");
     expect(this.sms.params["mocean-to"]).to.eq("test to2,test to3");
   });
