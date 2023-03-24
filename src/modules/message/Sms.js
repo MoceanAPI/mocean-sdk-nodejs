@@ -73,11 +73,6 @@ class Sms extends AbstractMocean {
     return this;
   }
 
-  setMedium(param) {
-    this.params["mocean-medium"] = param;
-    return this;
-  }
-
   addTo(param) {
     if (
       typeof this.params["mocean-to"] !== "undefined" &&
