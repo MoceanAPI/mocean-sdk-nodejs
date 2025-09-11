@@ -16,7 +16,7 @@ describe("Recording Test", () => {
   beforeEach(() => {
     const apiKey = "testapikey";
     const apiSecret = "testapisecret";
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     this.mocean = new Mocean(credentials);
     this.voice = this.mocean.voice();
   });

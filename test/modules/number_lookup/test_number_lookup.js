@@ -29,7 +29,7 @@ describe("Number Lookup Test", () => {
   beforeEach(() => {
     const apiKey = "testapikey";
     const apiSecret = "testapisecret";
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     this.mocean = new Mocean(credentials);
     this.numberLookup = this.mocean.numberLookup();
   });

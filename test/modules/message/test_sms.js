@@ -17,7 +17,7 @@ describe("SMS Test", () => {
   beforeEach(() => {
     const apiKey = "testapikey";
     const apiSecret = "testapisecret";
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     this.mocean = new Mocean(credentials);
     this.sms = this.mocean.sms();
   });

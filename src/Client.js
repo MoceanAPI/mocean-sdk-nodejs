@@ -1,8 +1,9 @@
 class Client {
-  constructor(apiKey = "", apiSecret = "") {
+  constructor({apiKey = "", apiSecret = "", apiToken = ""}) {
     this.params = {
       "mocean-api-key": apiKey,
-      "mocean-api-secret": apiSecret
+      "mocean-api-secret": apiSecret,
+      "mocean-api-token": apiToken,
     };
   }
 
@@ -12,6 +13,10 @@ class Client {
 
   setApiSecret(param) {
     this.params["mocean-api-secret"] = param;
+  }
+
+  setApiToken(param) {
+    this.params["mocean-api-token"] = param;
   }
 }
 

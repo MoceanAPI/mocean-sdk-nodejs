@@ -18,7 +18,7 @@ describe("Message Status Test", () => {
   beforeEach(() => {
     const apiKey = "testapikey";
     const apiSecret = "testapisecret";
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     this.mocean = new Mocean(credentials);
     this.messageStatus = this.mocean.messageStatus();
   });
