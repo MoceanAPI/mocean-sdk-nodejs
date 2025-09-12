@@ -11,7 +11,7 @@ describe("Mocean Test", () => {
   const apiSecret = "testapisecret";
 
   it("should create a mocean object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     expect(mocean).to.be.an("object");
@@ -25,22 +25,22 @@ describe("Mocean Test", () => {
 
   it("should throw error when credentials not set", () => {
     const nullApiKey = () => {
-      new Mocean(new Client(null, apiSecret));
+      new Mocean(new Client({apiKey:null, apiSecret}));
     };
     const nullApiSecret = () => {
-      new Mocean(new Client(apiKey, null));
+      new Mocean(new Client({apiKey, apiSecret:null}));
     };
     const bothNull = () => {
-      new Mocean(new Client(null, null));
+      new Mocean(new Client({apiKey:null, apiSecret:null}));
     };
     const emptyApiKey = () => {
-      new Mocean(new Client("", apiSecret));
+      new Mocean(new Client({apiKey:"", apiSecret}));
     };
     const emptyApiSecret = () => {
-      new Mocean(new Client(apiKey, ""));
+      new Mocean(new Client({apiKey, apiSecret:""}));
     };
     const bothEmpty = () => {
-      new Mocean(new Client());
+      new Mocean(new Client({}));
     };
 
     expect(nullApiKey).to.throw();
@@ -55,13 +55,13 @@ describe("Mocean Test", () => {
     const transmmiter = new Transmitter({
       baseUrl: "http://test.com"
     });
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials, { transmitter: transmmiter });
     expect(mocean.sms().transmitter).to.eq(transmmiter);
   });
 
   it("should describe obj_auth as an credentials object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     expect(mocean.obj_auth).to.be.an.instanceOf(Client);
@@ -69,7 +69,7 @@ describe("Mocean Test", () => {
   });
 
   it("should expose sms object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const sms = require("../src/modules/message/Sms");
@@ -77,7 +77,7 @@ describe("Mocean Test", () => {
   });
 
   it("should export sms object using flashSms", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const sms = require("../src/modules/message/Sms");
@@ -86,7 +86,7 @@ describe("Mocean Test", () => {
   });
 
   it("should expose balance object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const balance = require("../src/modules/account/Balance");
@@ -94,7 +94,7 @@ describe("Mocean Test", () => {
   });
 
   it("should expose pricing object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const pricing = require("../src/modules/account/Pricing");
@@ -102,7 +102,7 @@ describe("Mocean Test", () => {
   });
 
   it("should expose message_status object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const messageStatus = require("../src/modules/message/MessageStatus");
@@ -110,7 +110,7 @@ describe("Mocean Test", () => {
   });
 
   it("should expose verify_request object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const verifyRequest = require("../src/modules/message/VerifyRequest");
@@ -118,7 +118,7 @@ describe("Mocean Test", () => {
   });
 
   it("should expose verify_validate object", () => {
-    const credentials = new Client(apiKey, apiSecret);
+    const credentials = new Client({apiKey, apiSecret});
     const mocean = new Mocean(credentials);
 
     const verifyValidate = require("../src/modules/message/VerifyValidate");

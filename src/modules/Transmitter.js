@@ -37,6 +37,9 @@ class Transmitter {
       baseUrl: `${this.options.baseUrl}/rest/${this.options.version}`,
       uri,
       method,
+      headers: {
+        'Authorization': 'Bearer '+clonedParams["mocean-api-token"],
+      },
       qs: method === "get" ? clonedParams : {},
       form: method === "post" ? clonedParams : {},
       encoding: null

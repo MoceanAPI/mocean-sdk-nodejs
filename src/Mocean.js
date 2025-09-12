@@ -6,10 +6,11 @@ class Mocean {
       throw Error("Object pass into Mocean must be Client");
     }
     if (
-      !client.params["mocean-api-key"] ||
-      !client.params["mocean-api-secret"]
+      (!client.params["mocean-api-key"] ||
+      !client.params["mocean-api-secret"]) && 
+      !client.params["mocean-api-token"]
     ) {
-      throw Error("api key and api secret can't be empty");
+      throw Error("api key and api secret or api token can't be empty");
     }
     this.obj_auth = client;
     this.options = options;

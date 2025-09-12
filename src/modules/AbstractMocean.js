@@ -4,7 +4,8 @@ class AbstractMocean {
   constructor(objAuth, options) {
     this.params = {
       "mocean-api-key": objAuth.params["mocean-api-key"],
-      "mocean-api-secret": objAuth.params["mocean-api-secret"]
+      "mocean-api-secret": objAuth.params["mocean-api-secret"],
+      "mocean-api-token": objAuth.params["mocean-api-token"]
     };
 
     // if there's a transmitter client passed in, use that
