@@ -24,9 +24,10 @@ npm install mocean-sdk
 ```
 
 ## Usage
+### For version >=2.2.3
 There are 2 ways to connect to MoceanAPI
 
-Option 1: Create a client with your API token:
+Option 1: Create a client with your API token
 
 ```javascript
 const client = require('mocean-sdk');
@@ -35,12 +36,22 @@ var token = new client.Client({apiToken: "API_TOKEN_HERE"});
 var mocean = new client.Mocean(token);
 ```
 
-Option 2 (legacy): Create a client with your API key and secret:
+Option 2 (legacy): Create a client with your API key and secret
 
 ```javascript
 const client = require('mocean-sdk');
 
 var token = new client.Client({apiKey: "API_KEY_HERE", apiSecret: "API_SECRET_HERE"});
+var mocean = new client.Mocean(token);
+```
+
+### For version <2.2.3
+Create a client with your API key and secret:
+
+```javascript
+const client = require('mocean-sdk');
+
+var token = new client.Client("API_KEY_HERE", "API_SECRET_HERE"});
 var mocean = new client.Mocean(token);
 ```
 
