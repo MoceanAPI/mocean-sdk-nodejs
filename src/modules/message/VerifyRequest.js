@@ -76,6 +76,8 @@ class VerifyRequest extends AbstractMocean {
       verifyRequestUrl += "/sms";
     } else if (this.channel.toLocaleLowerCase() === "telegram") {
       verifyRequestUrl += "/telegram";
+    } else if (this.channel.toLocaleLowerCase() === "email") {
+      verifyRequestUrl += "/email";
     }
 
     return this.transmitter.post(verifyRequestUrl, this.params, callback);
